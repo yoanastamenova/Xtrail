@@ -1,1 +1,39 @@
-<p>login works!</p>
+<section class="relative bg-linear-to-br from-zinc-800 via-gray-600 to-black min-h-screen">
+  <div class="flex flex-col items-center justify-center px-6 mx-auto min-h-screen lg:py-0">
+      <a href="#" class="flex items-center mb-8 text-2xl font-semibold text-white">
+          <img class="w-72 h-auto drop-shadow-2xl" src="/logo.png" alt="Xtrail logo">
+      </a>
+      <div class="w-full bg-gray-950/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 md:mt-0 sm:max-w-md xl:p-0">
+          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1 class="text-2xl font-bold leading-tight tracking-tight text-white md:text-3xl">
+                  Sign in to your account
+              </h1>
+              <form class="space-y-4 md:space-y-6" action="#">
+                  <div>
+                      <label for="email" class="block mb-2 text-sm font-medium text-white">Your email</label>
+                      <input type="email" name="email" id="email" class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400" placeholder="name@mail.com" required="">
+                  </div>
+                  <div>
+                      <label for="password" class="block mb-2 text-sm font-medium text-white">Password</label>
+                      <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400" required="">
+                  </div>
+                  <div class="flex items-center justify-between">
+                      <div class="flex items-start">
+                          <div class="flex items-center h-5">
+                            <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-600 rounded bg-gray-800/50 focus:outline-none focus:ring-0 accent-lime-400" required="">
+                          </div>
+                          <div class="ml-3 text-sm">
+                            <label for="remember" class="text-gray-300">Remember me</label>
+                          </div>
+                      </div>
+                      <a href="#" class="text-sm font-medium text-lime-400 hover:text-lime-300 transition-colors">Forgot password?</a>
+                  </div>
+                  <button type="submit" class="w-full bg-lime-400 text-black font-semibold rounded-xl px-8 py-3.5 hover:bg-lime-300 hover:cursor-pointer transition-colors shadow-lg">Sign in</button>
+                  <p class="text-sm font-light text-gray-300">
+                      Don't have an account yet? <a href="#" class="font-medium text-lime-400 hover:text-lime-300 underline transition-colors">Sign up</a>
+                  </p>
+              </form>
+          </div>
+      </div>
+  </div>
+</section>
