@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { RunsModule } from './runs/runs.module';
+import { AchievmentsModule } from './achievments/achievments.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { RunsModule } from './runs/runs.module';
     }),
     UsersModule,
     RunsModule,
+    AchievmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
