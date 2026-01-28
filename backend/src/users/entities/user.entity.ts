@@ -1,8 +1,10 @@
+import { Run } from '../../runs/entities/run.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 export enum UserGoal {
@@ -40,6 +42,9 @@ export class User {
     default: UserGoal.HEALTHY,
   })
   goal: UserGoal;
+
+  @OneToMany(() => Run, (run) => run.user)
+  runs: Run[];
 
   @CreateDateColumn()
   createdAt: Date;
