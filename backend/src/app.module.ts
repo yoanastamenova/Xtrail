@@ -3,6 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsersModule } from './users/users.module';
+import { RunsModule } from './runs/runs.module';
+import { AchievmentsModule } from './achievments/achievments.module';
 
 @Module({
   imports: [
@@ -13,7 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        type: 'mysql',
+        type: configService.get<'postgres'>('DB_TYPE'),
         host: configService.get<string>('DATABASE_HOST'),
         port: configService.get<number>('DATABASE_PORT'),
         username: configService.get<string>('DATABASE_USERNAME'),
@@ -24,6 +27,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       }),
       inject: [ConfigService],
     }),
+    UsersModule,
+    RunsModule,
+    AchievmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
