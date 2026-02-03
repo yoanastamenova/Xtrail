@@ -6,16 +6,15 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
-
-export enum Goal {
-  GAIN = 'GAIN',
-  LOSE = 'LOSE',
-  HEALTHY = 'HEALTHY',
-}
+import { UserGoal } from 'src/users/entities/user.entity';
 
 export class RegisterDto {
   @IsEmail()
   email: string;
+
+  @IsString()
+  @MinLength(6)
+  username: string;
 
   @IsString()
   @MinLength(6)
@@ -33,6 +32,6 @@ export class RegisterDto {
   height?: number;
 
   @IsOptional()
-  @IsEnum(Goal)
-  goal?: Goal;
+  @IsEnum(UserGoal)
+  goal?: UserGoal;
 }

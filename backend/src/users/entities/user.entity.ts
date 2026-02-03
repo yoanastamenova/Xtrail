@@ -9,9 +9,9 @@ import {
 } from 'typeorm';
 
 export enum UserGoal {
-  GAIN = 'gain',
-  LOSE = 'lose',
-  HEALTHY = 'healthy',
+  GAIN = 'GAIN',
+  LOSE = 'LOSE',
+  HEALTHY = 'HEALTHY',
 }
 
 @Entity()
