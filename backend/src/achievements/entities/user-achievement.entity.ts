@@ -6,10 +6,10 @@ import {
   CreateDateColumn,
   ManyToOne,
 } from 'typeorm';
-import { Achievments } from './achievments.entity';
+import { Achievements } from './achievements.entity';
 
 @Entity()
-export class UserAchievments {
+export class UserAchievements {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -22,9 +22,9 @@ export class UserAchievments {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => User, (user) => user.achievments)
+  @ManyToOne(() => User, (user) => user.achievements)
   user: User;
 
-  @ManyToOne(() => Achievments, (achievment) => achievment.userAchievment)
-  achievment: Achievments;
+  @ManyToOne(() => Achievements, (achievement) => achievement.userAchievment)
+  achievment: Achievements;
 }

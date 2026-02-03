@@ -1,4 +1,4 @@
-import { UserAchievments } from '../../achievments/entities/user-achievment.entity';
+import { UserAchievements } from 'src/achievements/entities/user-achievement.entity';
 import { Run } from '../../runs/entities/run.entity';
 import {
   Entity,
@@ -47,8 +47,8 @@ export class User {
   @OneToMany(() => Run, (run) => run.user)
   runs: Run[];
 
-  @OneToMany(() => UserAchievments, (achievment) => achievment.user)
-  achievments: UserAchievments[];
+  @OneToMany(() => UserAchievements, (achievement) => achievement.user)
+  achievements: UserAchievements[];
 
   @CreateDateColumn()
   createdAt: Date;
