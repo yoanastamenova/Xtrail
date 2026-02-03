@@ -5,10 +5,10 @@ import {
   CreateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { UserAchievments } from './user-achievment.entity';
+import { UserAchievements } from './user-achievement.entity';
 
 @Entity()
-export class Achievments {
+export class Achievements {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -25,8 +25,8 @@ export class Achievments {
   createdAt: Date;
 
   @OneToMany(
-    () => UserAchievments,
-    (userAchievment) => userAchievment.achievment,
+    () => UserAchievements,
+    (userAchievement) => userAchievement.achievment,
   )
-  userAchievment: UserAchievments[];
+  userAchievment: UserAchievements[];
 }
