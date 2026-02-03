@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { RunsModule } from './runs/runs.module';
 import { AchievementsModule } from './achievements/achievements.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AchievementsModule } from './achievements/achievements.module';
     UsersModule,
     RunsModule,
     AchievementsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
