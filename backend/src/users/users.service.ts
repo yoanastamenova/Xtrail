@@ -44,12 +44,7 @@ export class UsersService {
   //4. Update user
   //5. Delte user by Id
   async deleteUser(id: number) {
-    const user = await this.findById(id);
-
-    if (!user) {
-      throw new NotFoundException('User with this ID does not exist');
-    }
-
+    await this.findById(id);
     return this.userRepository.delete(id);
   }
 }
