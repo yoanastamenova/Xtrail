@@ -9,6 +9,15 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
+interface RunStats {
+  totalRuns: number;
+  totalDistance: number;
+  totalDuration: number;
+  totalElevation: number;
+  averageDistance: number;
+  longestRun: number;
+}
+
 @Injectable()
 export class RunsService {
   constructor(
@@ -65,7 +74,23 @@ export class RunsService {
     return this.runRepository.update(id, updateRun);
   }
 
-  //5. DELETE runs/:id
+  //5. GET Runs Stats (for User)
+  async getRunStats(userId: number): Promise<RunStats> {
+    const stats = await this.runRepository
+      .createQueryBuilder('run')
+      .select('COUNT(*)', 'totalRuns')
+      .addSelect('COALESCE(SUM(run.distance), 0)', 'totalDistance')
+      .addSelect('COALESCE(SUM(run.duration), 0)', 'totalDuration')
+      .addSelect('COALESCE(SUM(run.elevation), 0)', 'totalElevation')
+      .addSelect('COALESCE(AVG(run.distance), 0)', 'averageDistance')
+      .addSelect('COALESCE(MAX(run.distance), 0)', 'longestRun')
+      .where('run.userId = :userId', { userId })
+      .getRawOne<RunStats>();
+
+    return stats as RunStats;
+  }
+
+  //6. DELETE runs/:id
 
   async deleteRun(id: number, userId: number) {
     const run = await this.runRepository.findOne({
