@@ -14,7 +14,7 @@ export class UserAchievements {
   id: number;
 
   @Column()
-  progress: string;
+  progress: number;
 
   @Column()
   dateEarned: Date;
@@ -25,6 +25,6 @@ export class UserAchievements {
   @ManyToOne(() => User, (user) => user.achievements)
   user: User;
 
-  @ManyToOne(() => Achievements, (achievement) => achievement.userAchievment)
-  achievment: Achievements;
+  @ManyToOne(() => Achievements, (achievement) => achievement.userAchievement)
+  achievement: Achievements;
 }
