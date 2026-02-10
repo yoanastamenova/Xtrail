@@ -14,7 +14,7 @@ export class AchievementsService {
   ) {}
 
   //1. GET all achievement
-  async findAll(): Promise<Achievements[]> {
+  async findAchievements(): Promise<Achievements[]> {
     return this.achievementsRepository.find({
       order: {
         id: 'ASC',
@@ -23,7 +23,7 @@ export class AchievementsService {
   }
 
   //2. GET achievement by ID
-  async findOne(id: number) {
+  async findAchievement(id: number) {
     const achievement = await this.achievementsRepository.findOneBy({ id });
 
     if (!achievement) {

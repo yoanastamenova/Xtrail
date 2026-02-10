@@ -11,14 +11,14 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findById(@Param('id') id: number) {
-    return this.usersService.findById(id);
-  }
-
   @Get('email/:email')
   findByEmail(@Param('email') email: string) {
     return this.usersService.findByEmail(email);
+  }
+
+  @Get(':id')
+  findById(@Param('id') id: number) {
+    return this.usersService.findById(id);
   }
   @Patch('update/:id')
   updateUser(@Param('id') id: number, @Body() updateUser: UpdateUser) {
