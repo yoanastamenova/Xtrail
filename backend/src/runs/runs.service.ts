@@ -9,7 +9,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-interface RunStats {
+export interface RunStats {
   totalRuns: number;
   totalDistance: number;
   totalDuration: number;
