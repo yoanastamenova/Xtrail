@@ -6,11 +6,15 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { RunsService } from './runs.service';
 import { CreateRunDto } from './dto/create-run.dto';
 import { UpdateRunDto } from './dto/update-run.dto';
 import { RunStats } from './runs.service';
+import { AuthGuard } from '../auth/guards/auth.guard';
+
+@UseGuards(AuthGuard)
 @Controller('runs')
 export class RunsController {
   constructor(private readonly runsService: RunsService) {}
