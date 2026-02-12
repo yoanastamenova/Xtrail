@@ -8,6 +8,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { AchievementsService } from 'src/achievements/achievements.service';
 
 export interface RunStats {
   totalRuns: number;
@@ -23,16 +24,50 @@ export class RunsService {
   constructor(
     @InjectRepository(Run)
     private runRepository: Repository<Run>,
+    private achievementsService: AchievementsService,
   ) {}
 
   //1. POST new run
-
   async createRun(createRunDto: CreateRunDto, userId: number) {
     const run = this.runRepository.create({
       ...createRunDto,
       user: { id: userId },
     });
-    return this.runRepository.save(run);
+    const savedRun = await this.runRepository.save(run);
+
+    await this.checkAchievements(userId, savedRun);
+
+    return savedRun;
+  }
+
+  // Private method to check and unlock achievements
+  private async checkAchievements(userId: number, run: Run) {
+    const stats = await this.getRunStats(userId);
+
+    const milestones = [
+      { threshold: 1, achievementId: 1 }, // First run
+      { threshold: 5, achievementId: 2 }, // 5 runs
+      { threshold: 10, achievementId: 3 }, // 10 runs
+      { threshold: 25, achievementId: 4 }, // 25 runs
+      { threshold: 50, achievementId: 5 }, // 50 runs
+    ];
+
+    for (const milestone of milestones) {
+      if (stats.totalRuns >= milestone.threshold) {
+        await this.achievementsService.unlockAchievement(
+          userId,
+          milestone.achievementId,
+        );
+      }
+    }
+
+    if (run.distance >= 10) {
+      await this.achievementsService.unlockAchievement(userId, 6); // 10km run
+    }
+
+    if (stats.totalDistance >= 100) {
+      await this.achievementsService.unlockAchievement(userId, 7); // 100km total
+    }
   }
 
   //2. GET runs (User)

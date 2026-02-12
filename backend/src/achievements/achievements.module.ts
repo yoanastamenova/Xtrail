@@ -7,8 +7,12 @@ import { Achievements } from './entities/achievements.entity';
 import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Achievements, UserAchievements]), AuthModule],
+  imports: [
+    TypeOrmModule.forFeature([Achievements, UserAchievements]),
+    AuthModule,
+  ],
   controllers: [AchievementsController],
   providers: [AchievementsService],
+  exports: [AchievementsService],
 })
 export class AchievementsModule {}
