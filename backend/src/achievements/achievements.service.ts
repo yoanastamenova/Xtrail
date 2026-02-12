@@ -1,8 +1,8 @@
+import { UserAchievements } from 'src/achievements/entities/user-achievement.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Achievements } from './entities/achievements.entity';
 import { Repository } from 'typeorm';
-import { UserAchievements } from './entities/user-achievement.entity';
 
 @Injectable()
 export class AchievementsService {
@@ -56,5 +56,39 @@ export class AchievementsService {
     }
 
     return this.achievementsRepository.delete(id);
+  }
+
+  //5. Unlock an achievement
+  async unlockAchievement(
+    userId: number,
+    achievementId: number,
+  ): Promise<UserAchievements> {
+    const achievement = await this.achievementsRepository.findOneBy({
+      id: achievementId,
+    });
+
+    if (!achievement) {
+      throw new NotFoundException('Achievement not found');
+    }
+
+    const existing = await this.userAchievementsRepository.findOne({
+      where: {
+        user: { id: userId },
+        achievement: { id: achievementId },
+      },
+    });
+
+    if (existing) {
+      return existing;
+    }
+
+    const userAchievement = this.userAchievementsRepository.create({
+      user: { id: userId },
+      achievement: { id: achievementId },
+      progress: 100,
+      dateEarned: new Date(),
+    });
+
+    return this.userAchievementsRepository.save(userAchievement);
   }
 }
