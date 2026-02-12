@@ -35,6 +35,12 @@ export class RunsController {
     return this.runsService.findRuns(userId);
   }
 
+  // Get stats for the current user
+  @Get('stats')
+  getRunStats(@CurrentUser('sub') userId: number): Promise<RunStats> {
+    return this.runsService.getRunStats(userId);
+  }
+
   // Get a specific run by ID
   @Get(':id')
   findRun(@Param('id') id: number) {
@@ -51,15 +57,9 @@ export class RunsController {
     return this.runsService.updateRun(runId, updateRun, userId);
   }
 
-  // Get stats for the current user
-  @Get('stats')
-  getRunStats(@CurrentUser('sub') userId: number): Promise<RunStats> {
-    return this.runsService.getRunStats(userId);
-  }
-
   // Delete run for the current user by runs ID (userId for ownership check)
   @Delete(':id')
-  deleteRun(@CurrentUser('sub') userId: number, @Param('id') id: number) {
-    return this.runsService.deleteRun(id, userId);
+  deleteRun(@CurrentUser('sub') userId: number, @Param('id') runId: number) {
+    return this.runsService.deleteRun(runId, userId);
   }
 }

@@ -28,7 +28,7 @@ export class AchievementsController {
 
   // Delete achievement by ID (Admin)
   @Delete(':id')
-  deleteAchievement(@Param('sub') id: number) {
+  deleteAchievement(@Param('id') id: number) {
     return this.achievementsService.deleteAchievement(id);
   }
 }
