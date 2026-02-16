@@ -5,11 +5,13 @@ import { AchievementsService } from './achievements.service';
 import { UserAchievements } from './entities/user-achievement.entity';
 import { Achievements } from './entities/achievements.entity';
 import { AuthModule } from '../auth/auth.module';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Achievements, UserAchievements]),
     AuthModule,
+    UsersModule,
   ],
   controllers: [AchievementsController],
   providers: [AchievementsService],

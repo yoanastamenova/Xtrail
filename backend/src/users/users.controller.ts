@@ -11,13 +11,17 @@ import { UsersService } from './users.service';
 import { UpdateUser } from './dto/update-user.dto';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { Roles } from './decorators/roles.decorator';
+import { UserRole } from './entities/user.entity';
+import { RolesGuard } from './guards/roles.guard';
 
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RolesGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('all')
+  @Roles([UserRole.admin])
   findAll() {
     return this.usersService.findAll();
   }
@@ -36,6 +40,7 @@ export class UsersController {
 
   // Get by ID (admin)
   @Get(':id')
+  @Roles([UserRole.admin])
   findById(@Param('id') id: number) {
     return this.usersService.findById(id);
   }
@@ -57,6 +62,7 @@ export class UsersController {
 
   // DELETE (Admin)
   @Delete(':id')
+  @Roles([UserRole.admin])
   deleteUser(@Param('id') id: number) {
     return this.usersService.deleteUser(id);
   }

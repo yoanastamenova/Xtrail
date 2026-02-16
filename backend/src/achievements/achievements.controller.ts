@@ -2,8 +2,11 @@ import { Controller, Delete, Get, Param, UseGuards } from '@nestjs/common';
 import { AchievementsService } from './achievements.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { RolesGuard } from 'src/users/guards/roles.guard';
+import { Roles } from 'src/users/decorators/roles.decorator';
+import { UserRole } from 'src/users/entities/user.entity';
 
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RolesGuard)
 @Controller('achievements')
 export class AchievementsController {
   constructor(private readonly achievementsService: AchievementsService) {}
@@ -28,6 +31,7 @@ export class AchievementsController {
 
   // Delete achievement by ID (Admin)
   @Delete(':id')
+  @Roles([UserRole.admin])
   deleteAchievement(@Param('id') id: number) {
     return this.achievementsService.deleteAchievement(id);
   }

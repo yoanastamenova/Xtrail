@@ -14,8 +14,11 @@ import { UpdateRunDto } from './dto/update-run.dto';
 import { RunStats } from './runs.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { RolesGuard } from 'src/users/guards/roles.guard';
+import { Roles } from 'src/users/decorators/roles.decorator';
+import { UserRole } from 'src/users/entities/user.entity';
 
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RolesGuard)
 @Controller('runs')
 export class RunsController {
   constructor(private readonly runsService: RunsService) {}
@@ -59,6 +62,7 @@ export class RunsController {
 
   // Delete run for the current user by runs ID (userId for ownership check)
   @Delete(':id')
+  @Roles([UserRole.admin])
   deleteRun(@CurrentUser('sub') userId: number, @Param('id') runId: number) {
     return this.runsService.deleteRun(runId, userId);
   }
