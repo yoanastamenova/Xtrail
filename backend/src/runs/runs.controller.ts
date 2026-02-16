@@ -14,9 +14,8 @@ import { UpdateRunDto } from './dto/update-run.dto';
 import { RunStats } from './runs.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import { RolesGuard } from 'src/users/guards/roles.guard';
 
-@UseGuards(AuthGuard, RolesGuard)
+@UseGuards(AuthGuard)
 @Controller('runs')
 export class RunsController {
   constructor(private readonly runsService: RunsService) {}
