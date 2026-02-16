@@ -14,7 +14,10 @@ import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { Roles } from './decorators/roles.decorator';
 import { UserRole } from './entities/user.entity';
 import { RolesGuard } from './guards/roles.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
+@ApiBearerAuth()
 @UseGuards(AuthGuard, RolesGuard)
 @Controller('users')
 export class UsersController {
