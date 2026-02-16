@@ -6,46 +6,60 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { RunsService } from './runs.service';
 import { CreateRunDto } from './dto/create-run.dto';
 import { UpdateRunDto } from './dto/update-run.dto';
 import { RunStats } from './runs.service';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+
+@UseGuards(AuthGuard)
 @Controller('runs')
 export class RunsController {
   constructor(private readonly runsService: RunsService) {}
 
-  @Post('new/:id')
-  createRun(@Param('id') id: number, @Body() createRunDto: CreateRunDto) {
-    return this.runsService.createRun(createRunDto, id);
+  // Create a run for the current user
+  @Post()
+  createRun(
+    @CurrentUser('sub') userId: number,
+    @Body() createRunDto: CreateRunDto,
+  ) {
+    return this.runsService.createRun(createRunDto, userId);
   }
 
-  @Get('runs/:id')
-  findRuns(@Param('id') id: number) {
-    return this.runsService.findRuns(id);
+  // Get all runs for the current user
+  @Get()
+  findRuns(@CurrentUser('sub') userId: number) {
+    return this.runsService.findRuns(userId);
   }
 
-  @Get('run/:id')
+  // Get stats for the current user
+  @Get('stats')
+  getRunStats(@CurrentUser('sub') userId: number): Promise<RunStats> {
+    return this.runsService.getRunStats(userId);
+  }
+
+  // Get a specific run by ID
+  @Get(':id')
   findRun(@Param('id') id: number) {
     return this.runsService.findRun(id);
   }
 
-  @Patch(':userId/run/:id')
+  // Update run for the current user by ID
+  @Patch(':id')
   updateRun(
-    @Param('userId') userId: number,
-    @Param('id') id: number,
+    @CurrentUser('sub') userId: number,
+    @Param('id') runId: number,
     @Body() updateRun: UpdateRunDto,
   ) {
-    return this.runsService.updateRun(id, updateRun, userId);
+    return this.runsService.updateRun(runId, updateRun, userId);
   }
 
-  @Get('run/stats/:id')
-  getRunStats(@Param('id') id: number): Promise<RunStats> {
-    return this.runsService.getRunStats(id);
-  }
-
-  @Delete('delete/:userId/:id')
-  deleteRun(@Param('id') id: number, @Param('userId') userId: number) {
-    return this.runsService.deleteRun(id, userId);
+  // Delete run for the current user by runs ID (userId for ownership check)
+  @Delete(':id')
+  deleteRun(@CurrentUser('sub') userId: number, @Param('id') runId: number) {
+    return this.runsService.deleteRun(runId, userId);
   }
 }

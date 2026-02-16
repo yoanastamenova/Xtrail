@@ -26,7 +26,7 @@ export class Achievements {
 
   @OneToMany(
     () => UserAchievements,
-    (userAchievement) => userAchievement.achievment,
+    (userAchievement) => userAchievement.achievement,
   )
-  userAchievment: UserAchievements[];
+  userAchievement: UserAchievements[];
 }

@@ -17,6 +17,12 @@ export class Run {
   distance: number;
 
   @Column()
+  pace: number;
+
+  @Column()
+  calories: number;
+
+  @Column()
   duration: number;
 
   @Column()

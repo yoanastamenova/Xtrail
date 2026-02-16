@@ -45,12 +45,14 @@ export class UsersService {
   //4. Update user
   async updateUser(id: number, updateUser: UpdateUser) {
     await this.findById(id);
-    return this.userRepository.update(id, updateUser);
+    await this.userRepository.update(id, updateUser);
+    return { message: 'User updated successfully' };
   }
 
-  //5. Delte user by Id
+  //5. Delete user by Id
   async deleteUser(id: number) {
     await this.findById(id);
-    return this.userRepository.delete(id);
+    await this.userRepository.delete(id);
+    return { message: 'User deleted successfully' };
   }
 }

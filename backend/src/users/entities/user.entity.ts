@@ -15,10 +15,22 @@ export enum UserGoal {
   HEALTHY = 'HEALTHY',
 }
 
+export enum UserRole {
+  user = 'user',
+  admin = 'admin',
+}
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.user,
+  })
+  role: UserRole;
 
   @Column({ unique: true })
   email: string;

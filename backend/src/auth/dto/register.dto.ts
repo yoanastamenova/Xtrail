@@ -23,13 +23,11 @@ export class RegisterDto {
   @IsNumber()
   age: number;
 
-  @IsOptional()
   @IsNumber()
-  weight?: number;
+  weight: number;
 
-  @IsOptional()
   @IsNumber()
-  height?: number;
+  height: number;
 
   @IsOptional()
   @IsEnum(UserGoal)

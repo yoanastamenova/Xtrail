@@ -6,6 +6,12 @@ export class CreateRunDto {
   distance: number;
 
   @IsNumber()
+  pace: number;
+
+  @IsNumber()
+  calories: number;
+
+  @IsNumber()
   duration: number;
 
   @IsNumber()
