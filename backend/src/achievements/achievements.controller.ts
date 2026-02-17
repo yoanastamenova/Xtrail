@@ -5,7 +5,10 @@ import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { RolesGuard } from 'src/users/guards/roles.guard';
 import { Roles } from 'src/users/decorators/roles.decorator';
 import { UserRole } from 'src/users/entities/user.entity';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Achievements')
+@ApiBearerAuth()
 @UseGuards(AuthGuard, RolesGuard)
 @Controller('achievements')
 export class AchievementsController {

@@ -14,7 +14,10 @@ import { UpdateRunDto } from './dto/update-run.dto';
 import { RunStats } from './runs.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Runs')
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller('runs')
 export class RunsController {
