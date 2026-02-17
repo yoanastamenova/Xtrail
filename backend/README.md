@@ -1,98 +1,179 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# ☁️ Xtrail Running Backend ☁️
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+The backend for the Xtrail Running App as RESTful API built with NestJS for managing users, runs and achievements. Using authentication from passport and JWT together with TypeORM for maximum utility working HTTP server.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## 🛠️ Tech Stack
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+<div align="center">
+ <a href="https://nodejs.org/">
+    <img src="https://img.shields.io/badge/node.js-026E00?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+  </a>
+  <a href="https://typescriptlang.org">
+    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  </a>
+  <a href="https://jwt.com/">
+    <img src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens" alt="Leaflet" />
+  </a>
+  <a href="https://typeorm.io/">
+    <img src="https://img.shields.io/badge/TypeORM-FE0803?style=for-the-badge&logo=typeorm&logoColor=fff" alt="Leaflet" />
+  </a>
+  <a href="https://swagger.com/">
+    <img src="https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white" alt="Leaflet" />
+  </a>
+  <a href="https://nestjs.com /">
+    <img src="https://img.shields.io/badge/NestJs-ea2845?style=for-the-badge&logo=nestjs&logoColor=white" alt="Next.js" />
+  </a>
+    <a href="https://react.dev/">
+    <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="React" />
+  </a>
+  <a href="https://tailwindcss.com/">
+    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
+  </a>
+  <a href="https://heroicons.com/">
+    <img src="https://img.shields.io/badge/Heroicons-8B5CF6?style=for-the-badge&logo=heroicons&logoColor=white" alt="Heroicons" />
+  </a>
+</div>
 
-## Project setup
+## Local installation
 
-```bash
-$ npm install
-```
+#### Prerequisites
+- Node.js 18+ (see package.json)
+- Docker (recommended) or directly PostgreSQL
+- Npm package manager
 
-## Compile and run the project
+## Clone from Git
+git clone https://github.com/yoanastamenova/Xtrail
+cd Xtrail
 
-```bash
-# development
-$ npm run start
+## Install packages and dependancies
 
-# watch mode
-$ npm run start:dev
+npm install
 
-# production mode
-$ npm run start:prod
-```
+## Environment Configuration
 
-## Run tests
+Create a .env file in the backend folder with the specifications from the .env example
 
-```bash
-# unit tests
-$ npm run test
+PORT=3000
 
-# e2e tests
-$ npm run test:e2e
+#PostgreSQL config
+DB_TYPE=postgres
+DB_HOST=thehost
+DB_PORT=5432
+DB_USERNAME=username
+DB_PASSWORD=password
+DB_NAME=xtrail
 
-# test coverage
-$ npm run test:cov
-```
+#JWT config
+JWT_SECRET=yoursecret
+JWT_EXPIRATION=1d
 
-## Deployment
+## Running the database
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+#### From terminal using command line
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+docker run -d --name xtrail-db -e POSTGRES_USER=youruser -e POSTGRES_PASSWORD=yourpassword -e POSTGRES_DB=xtrail -p 5432:5432 postgres:16
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+#### From Docker desktop
 
-## Resources
+Include all .env variables
 
-Check out a few resources that may come in handy when working with NestJS:
+## Running the Application
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+#Development server
+npm run start:dev
 
-## Support
+#Production mode
+npm run build
+npm run start:prod
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+The API will be available at http://localhost:3000
 
-## Stay in touch
+## Seeding the Database
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Populate the database with achievements data:
 
-## License
+npm run seed 
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This will insert the 7 types of achievements available.
+
+## Database Configuration 
+
+### User Entity Schema
+
+| Field       | Type          | Constraints           | Description                    |
+|-------------|---------------|-----------------------|--------------------------------|
+| id          | number        | Primary Key, Auto     | Unique identifier              |
+| username    | string        | Unique, Not Null      | Unique username                |
+| email       | text          | Unique, Not Null      | Unique email                   |
+| password    | string        | Not Null              | Hashed with bcrypt             |
+| age         | number        | Not Null              | Age as number                  |
+| weight      | number        | Not Null              | Weight in kilograms            |
+| height      | number        | Not Null              | Height in centimeters          |
+| goal        | enum          | Not Null              | Can be healthy, lose, gai      |
+| role        | enum          | Not Null              | Can be user or admin           |
+
+
+### Run Entitiy Schema
+
+| Field       | Type          | Constraints           | Description                    |
+|-------------|---------------|-----------------------|--------------------------------|
+| id          | number        | Primary Key, Auto     | Unique identifier              |
+| distance    | number        | Unique, Not Null      | Total distance in KM           |
+| pace        | number        | Unique, Not Null      | Average pace                   |
+| calories    | number        | Not Null              | Total burned kcal              |
+| duration    | number        | Not Null              | Duration in time               |
+| elevation   | number        | Not Null              | Elevation in meters            |
+| date        | Date          | Not Null              | Date in DD/MM/YYYY             |
+
+
+### Achievements Entitiy Schema
+
+| Field       | Type          | Constraints           | Description                    |
+|-------------|---------------|-----------------------|--------------------------------|
+| id          | number        | Primary Key, Auto     | Unique identifier              |
+| name        | string        | Unique, Not Null      | Name of the award              |
+| description | text          | Unique, Not Null      | Description of the award       |
+| icon        | string        | Not Null              | Icon to display                |
+| createdAt   | Date          | Not Null              | Date in DD/MM/YYYY             |
+
+TypeORM is configured with synchronize: false, which does not automatically creates/updates tables based on entity definitions. 
+
+## Swagger documentation
+
+A comperhensive guide on endpoints and their responses is written at 
+
+http://localhost:3000/api
+
+## Validation
+
+The API uses class-validator decorators for automatic request validation. Invalid requests return `400 Bad Request` with detailed error messages.
+
+
+## Error Handling
+
+The API uses NestJS's built-in HTTP exceptions:
+
+| Status Code | Exception             | Use Case                          |
+|-------------|-----------------------|-----------------------------------|
+| 400         | BadRequestException   | Validation errors                 |
+| 404         | NotFoundException     | Coffee ID not found               |
+| 409         | ConflictException     | Duplicate coffee name             |
+| 500         | InternalServerError   | Unexpected server errors          |
+
+## Future Improvements
+
+- [ ] Add comprehensive unit and e2e tests
+- [ ] Implement pagination for entities
+- [ ] Add filtering and search capabilities
+- [ ] Set up proper database migrations for production
+- [ ] Containerize the application (Dockerfile)
+
+### Contact
+
+If you like what you see or if there is anything you want to report, please let me know on: 
+
+<a href = "mailto:yoana.stamenovaa@gmail.com"><img src="https://img.shields.io/badge/Gmail-C6362C?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>  <a href="https://www.linkedin.com/in/yoanastamenova" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>
+
+Made with <3 and ☕ from Yoana
