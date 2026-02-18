@@ -20,8 +20,10 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
   // Enable CORS
+  const configService = app.get(ConfigService);
+
   app.enableCors({
-    origin: 'http://localhost:4200',
+    origin: configService.get<number>('FRONT'),
     credentials: true,
   });
 
@@ -35,7 +37,6 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
-  const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT', 3000);
 
   await app.listen(port);

@@ -22,15 +22,18 @@ export class AchievementsService {
     });
   }
 
-  //2. GET achievement by ID
-  async findAchievement(id: number) {
-    const achievement = await this.achievementsRepository.findOneBy({ id });
+  //2. GET user achievement by ID
+  async findUserAchievement(id: number, userId: number) {
+    const userAchievement = await this.userAchievementsRepository.findOne({
+      where: { id, user: { id: userId } },
+      relations: ['achievement'],
+    });
 
-    if (!achievement) {
-      throw new NotFoundException('Achievement with this ID does not exist!');
+    if (!userAchievement) {
+      throw new NotFoundException('Achievement not found');
     }
 
-    return achievement;
+    return userAchievement;
   }
 
   //3. GET User achievements
@@ -86,7 +89,6 @@ export class AchievementsService {
       user: { id: userId },
       achievement: { id: achievementId },
       progress: 100,
-      dateEarned: new Date(),
     });
 
     return this.userAchievementsRepository.save(userAchievement);

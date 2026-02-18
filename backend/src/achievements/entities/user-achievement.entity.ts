@@ -16,9 +16,6 @@ export class UserAchievements {
   @Column()
   progress: number;
 
-  @Column()
-  dateEarned: Date;
-
   @CreateDateColumn()
   createdAt: Date;
 

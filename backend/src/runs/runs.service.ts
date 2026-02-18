@@ -2,7 +2,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Run } from './entities/run.entity';
 import { Repository } from 'typeorm';
 import { CreateRunDto } from './dto/create-run.dto';
-import { UpdateRunDto } from './dto/update-run.dto';
 import {
   ForbiddenException,
   Injectable,
@@ -72,44 +71,39 @@ export class RunsService {
 
   //2. GET runs (User)
   async findRuns(userId: number): Promise<Run[]> {
-    return this.runRepository.find({
+    const runs = await this.runRepository.find({
       where: { user: { id: userId } },
       order: {
         id: 'ASC',
       },
     });
+
+    if (runs.length === 0) {
+      throw new NotFoundException('You have no runs to show');
+    }
+
+    return runs;
   }
 
   //3. GET runs/:id (Specific run details)
-  async findRun(id: number) {
-    const run = await this.runRepository.findOneBy({ id });
-
-    if (!run) {
-      throw new NotFoundException('Run with this ID does not exist!');
-    }
-
-    return run;
-  }
-
-  //4. PATCH runs/:id
-  async updateRun(id: number, updateRun: UpdateRunDto, userId: number) {
+  async findRun(id: number, userId: number, isAdmin: boolean) {
     const run = await this.runRepository.findOne({
       where: { id },
       relations: ['user'],
     });
 
     if (!run) {
-      throw new NotFoundException('Run with this ID does not exist!');
+      throw new NotFoundException(`Run with ID ${id} does not exist`);
     }
 
-    if (run.user.id !== userId) {
-      throw new ForbiddenException('This run belongs to another user');
+    if (run.user.id !== userId && !isAdmin) {
+      throw new ForbiddenException('You dont have permision to view this run');
     }
 
-    return this.runRepository.update(id, updateRun);
+    return run;
   }
 
-  //5. GET Runs Stats (for User)
+  //4. GET Runs Stats (for User)
   async getRunStats(userId: number): Promise<RunStats> {
     const stats = await this.runRepository
       .createQueryBuilder('run')
@@ -125,22 +119,24 @@ export class RunsService {
     return stats as RunStats;
   }
 
-  //6. DELETE runs/:id
-
-  async deleteRun(id: number, userId: number) {
+  //5. DELETE runs/:id (User/Admin)
+  async deleteRun(id: number, userId: number, isAdmin: boolean) {
     const run = await this.runRepository.findOne({
       where: { id },
       relations: ['user'],
     });
 
     if (!run) {
-      throw new NotFoundException('Run with this ID does not exist!');
+      throw new NotFoundException(`Run with ID ${id} does not exist`);
     }
 
-    if (run?.user.id !== userId) {
-      throw new ForbiddenException('This run belongs to another user');
+    if (run.user.id !== userId && !isAdmin) {
+      throw new ForbiddenException(
+        'You do not have permission to delete this run',
+      );
     }
 
-    return this.runRepository.delete(id);
+    await this.runRepository.delete(id);
+    return { message: `Run ${id} deleted successfully` };
   }
 }

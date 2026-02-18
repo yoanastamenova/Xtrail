@@ -1,6 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { User, UserRole } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { UpdateUser } from './dto/update-user.dto';
 
@@ -54,5 +58,16 @@ export class UsersService {
     await this.findById(id);
     await this.userRepository.delete(id);
     return { message: 'User deleted successfully' };
+  }
+
+  //6. Update user role (admin only)
+  async updateUserRole(id: number, role: UserRole, currentUserId: number) {
+    await this.findById(id);
+
+    if (id === currentUserId && role !== UserRole.admin) {
+      throw new ForbiddenException('Cannot remove your own admin role');
+    }
+    await this.userRepository.update(id, { role });
+    return { message: `User role updated to ${role} successfully` };
   }
 }

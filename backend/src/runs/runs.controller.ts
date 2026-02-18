@@ -4,13 +4,11 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
 import { RunsService } from './runs.service';
 import { CreateRunDto } from './dto/create-run.dto';
-import { UpdateRunDto } from './dto/update-run.dto';
 import { RunStats } from './runs.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
@@ -24,7 +22,7 @@ export class RunsController {
   constructor(private readonly runsService: RunsService) {}
 
   // Create a run for the current user
-  @Post()
+  @Post('new')
   createRun(
     @CurrentUser('sub') userId: number,
     @Body() createRunDto: CreateRunDto,
@@ -33,7 +31,7 @@ export class RunsController {
   }
 
   // Get all runs for the current user
-  @Get()
+  @Get('all')
   findRuns(@CurrentUser('sub') userId: number) {
     return this.runsService.findRuns(userId);
   }
@@ -44,25 +42,23 @@ export class RunsController {
     return this.runsService.getRunStats(userId);
   }
 
-  // Get a specific run by ID
+  // Get a specific run by ID (owner or admin only)
   @Get(':id')
-  findRun(@Param('id') id: number) {
-    return this.runsService.findRun(id);
-  }
-
-  // Update run for the current user by ID
-  @Patch(':id')
-  updateRun(
+  findRun(
+    @Param('id') id: number,
     @CurrentUser('sub') userId: number,
-    @Param('id') runId: number,
-    @Body() updateRun: UpdateRunDto,
+    @CurrentUser('role') role: string,
   ) {
-    return this.runsService.updateRun(runId, updateRun, userId);
+    return this.runsService.findRun(id, userId, role === 'admin');
   }
 
-  // Delete run for the current user by runs ID (userId for ownership check)
+  // Delete run (owner or admin only)
   @Delete(':id')
-  deleteRun(@CurrentUser('sub') userId: number, @Param('id') runId: number) {
-    return this.runsService.deleteRun(runId, userId);
+  deleteRun(
+    @Param('id') runId: number,
+    @CurrentUser('sub') userId: number,
+    @CurrentUser('role') role: string,
+  ) {
+    return this.runsService.deleteRun(runId, userId, role === 'admin');
   }
 }

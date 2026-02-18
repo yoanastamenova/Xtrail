@@ -5,8 +5,8 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('health')
-  healthCheck() {
-    return { status: 'ok' };
+  @Get()
+  getRoot() {
+    return { message: 'Xtrail app server healthy', status: 'ok' };
   }
 }

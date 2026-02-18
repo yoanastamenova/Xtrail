@@ -13,23 +13,24 @@ export class Run {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  // Distance in kilometers (e.g., 5.25 for 5.25km)
+  @Column('decimal', { precision: 6, scale: 2 })
   distance: number;
 
+  // Pace in seconds per km (e.g., 560 for 9'20"/km)
   @Column()
   pace: number;
 
   @Column()
   calories: number;
 
+  // Duration in seconds (e.g., 1590 for 26:30)
   @Column()
   duration: number;
 
+  // Elevation in meters
   @Column()
   elevation: number;
-
-  @Column()
-  date: Date;
 
   @CreateDateColumn()
   createdAt: Date;
