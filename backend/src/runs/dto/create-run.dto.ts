@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber } from 'class-validator';
+import { IsNumber, Min } from 'class-validator';
 
 export class CreateRunDto {
   @ApiProperty({ example: 5.25, description: 'Distance in kilometers' })
   @IsNumber()
+  @Min(10)
   distance: number;
 
   @ApiProperty({
@@ -22,6 +23,7 @@ export class CreateRunDto {
     description: 'Duration in seconds (26:30 = 1590)',
   })
   @IsNumber()
+  @Min(2)
   duration: number;
 
   @ApiProperty({ example: 45, description: 'Elevation gain in meters' })

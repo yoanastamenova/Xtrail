@@ -24,14 +24,8 @@ The backend for the Xtrail Running App as a RESTful API built with NestJS for ma
   <a href="https://nestjs.com/">
     <img src="https://img.shields.io/badge/NestJs-ea2845?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS" />
   </a>
-  <a href="https://angular.dev/">
-    <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular" />
-  </a>
-  <a href="https://tailwindcss.com/">
-    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
-  </a>
-  <a href="https://heroicons.com/">
-    <img src="https://img.shields.io/badge/Heroicons-8B5CF6?style=for-the-badge&logo=heroicons&logoColor=white" alt="Heroicons" />
+  <a href="https://www.postgresql.org/">
+    <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
   </a>
 </div>
 
@@ -120,6 +114,14 @@ npm run seed
 
 This will insert the 7 types of achievements available.
 
+## Admin Setup
+
+To promote a user to admin role:
+
+```bash
+npm run make-admin your@email.com
+```
+
 ## Database Configuration 
 
 ### User Entity Schema
@@ -143,25 +145,35 @@ This will insert the 7 types of achievements available.
 | Field       | Type          | Constraints           | Description                    |
 |-------------|---------------|-----------------------|--------------------------------|
 | id          | number        | Primary Key, Auto     | Unique identifier              |
-| distance    | number        | Not Null              | Total distance in KM           |
-| pace        | number        | Not Null              | Average pace                   |
+| distance    | decimal(6,2)  | Not Null              | Distance in kilometers         |
+| pace        | number        | Not Null              | Pace in seconds per km         |
 | calories    | number        | Not Null              | Total burned kcal              |
-| duration    | number        | Not Null              | Duration in time               |
-| elevation   | number        | Not Null              | Elevation in meters            |
-| date        | Date          | Not Null              | Date in DD/MM/YYYY             |
+| duration    | number        | Not Null              | Duration in seconds            |
+| elevation   | number        | Not Null              | Elevation gain in meters       |
+| createdAt   | Date          | Auto                  | Run creation timestamp         |
 
 
-### Achievements Entity Schema
+### Achievement Entity Schema
 
 | Field       | Type          | Constraints           | Description                    |
 |-------------|---------------|-----------------------|--------------------------------|
 | id          | number        | Primary Key, Auto     | Unique identifier              |
-| name        | string        | Unique, Not Null      | Name of the award              |
-| description | text          | Not Null              | Description of the award       |
+| name        | string        | Unique, Not Null      | Name of the achievement        |
+| description | text          | Not Null              | Description of the achievement |
 | icon        | string        | Not Null              | Icon to display                |
-| createdAt   | Date          | Not Null              | Date in DD/MM/YYYY             |
+| createdAt   | Date          | Auto                  | Creation timestamp             |
 
-TypeORM is configured with synchronize: false, which does not automatically create/update tables based on entity definitions.
+### UserAchievement Entity Schema (Join Table)
+
+| Field       | Type          | Constraints           | Description                    |
+|-------------|---------------|-----------------------|--------------------------------|
+| id          | number        | Primary Key, Auto     | Unique identifier              |
+| progress    | number        | Not Null              | Achievement progress (0-100)   |
+| createdAt   | Date          | Auto                  | Date achievement was earned    |
+| userId      | number        | Foreign Key           | Reference to User              |
+| achievementId | number      | Foreign Key           | Reference to Achievement       |
+
+TypeORM is configured with `synchronize: true` in development, which automatically syncs schema changes. This should be disabled in production.
 
 ### Entity Relationships
 
@@ -204,14 +216,18 @@ The API uses NestJS's built-in HTTP exceptions:
 | Status Code | Exception             | Use Case                          |
 |-------------|-----------------------|-----------------------------------|
 | 400         | BadRequestException   | Validation errors                 |
+| 401         | UnauthorizedException | Invalid or missing token          |
+| 403         | ForbiddenException    | Insufficient permissions          |
 | 404         | NotFoundException     | Resource not found                |
-| 409         | ConflictException     | Duplicate name                    |
+| 409         | ConflictException     | Duplicate email/username          |
 | 500         | InternalServerError   | Unexpected server errors          |
 
 ## Future Improvements
 
-- [ ] Add comprehensive unit and e2e tests
+- [ ] Add comprehensive unit tests
 - [ ] Implement pagination for entities
+- [ ] Add Rate limiting (Security)
+- [ ] Add Refresh tokens option
 - [ ] Include date range filtering for runs (week/month)
 - [ ] Add filtering and search capabilities
 - [ ] Set up proper database migrations for production
