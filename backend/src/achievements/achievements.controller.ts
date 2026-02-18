@@ -35,11 +35,11 @@ export class AchievementsController {
 
   //Get user achievement by ID
   @Get(':id')
-  findUserAchievement(
+  async findUserAchievement(
     @Param('id') id: number,
     @CurrentUser('sub') userId: number,
-  ) {
-    return this.achievementsService.findUserAchievement(id, userId);
+  ): Promise<any> {
+    return await this.achievementsService.findUserAchievement(id, userId);
   }
 
   // Delete achievement by ID (Admin)
