@@ -52,9 +52,13 @@ export class RunsController {
     return this.runsService.findRun(id, userId, role === 'admin');
   }
 
-  // Delete run for the current user by runs ID (userId for ownership check)
+  // Delete run (owner or admin only)
   @Delete(':id')
-  deleteRun(@CurrentUser('sub') userId: number, @Param('id') runId: number) {
-    return this.runsService.deleteRun(runId, userId);
+  deleteRun(
+    @Param('id') runId: number,
+    @CurrentUser('sub') userId: number,
+    @CurrentUser('role') role: string,
+  ) {
+    return this.runsService.deleteRun(runId, userId, role === 'admin');
   }
 }

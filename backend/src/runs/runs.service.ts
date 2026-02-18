@@ -119,8 +119,8 @@ export class RunsService {
     return stats as RunStats;
   }
 
-  //5. DELETE runs/:id
-  async deleteRun(id: number, userId: number) {
+  //5. DELETE runs/:id (User/Admin)
+  async deleteRun(id: number, userId: number, isAdmin: boolean) {
     const run = await this.runRepository.findOne({
       where: { id },
       relations: ['user'],
@@ -130,7 +130,7 @@ export class RunsService {
       throw new NotFoundException(`Run with ID ${id} does not exist`);
     }
 
-    if (run.user.id !== userId) {
+    if (run.user.id !== userId && !isAdmin) {
       throw new ForbiddenException(
         'You do not have permission to delete this run',
       );
