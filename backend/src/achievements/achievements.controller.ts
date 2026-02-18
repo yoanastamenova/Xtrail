@@ -20,16 +20,26 @@ export class AchievementsController {
     return this.achievementsService.findAchievements();
   }
 
-  //Get user's achievements
+  //Get current user's achievements
   @Get('user')
   findUserAchievements(@CurrentUser('sub') userId: number) {
     return this.achievementsService.getUserAchievements(userId);
   }
 
-  //Get achievement by ID
+  //Get any user's achievements (Admin only)
+  @Get('user/:userId')
+  @Roles([UserRole.admin])
+  findUserAchievementsByAdmin(@Param('userId') userId: number) {
+    return this.achievementsService.getUserAchievements(userId);
+  }
+
+  //Get user achievement by ID
   @Get(':id')
-  findAchievement(@Param('id') id: number) {
-    return this.achievementsService.findAchievement(id);
+  findUserAchievement(
+    @Param('id') id: number,
+    @CurrentUser('sub') userId: number,
+  ) {
+    return this.achievementsService.findUserAchievement(id, userId);
   }
 
   // Delete achievement by ID (Admin)
