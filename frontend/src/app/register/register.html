@@ -10,8 +10,12 @@
               </h1>
               <form class="space-y-4 md:space-y-6" action="#">
                   <div>
-                      <label for="email" class="block mb-2 text-sm font-medium text-white">Your email</label>
+                      <label for="email" class="block mb-2 text-sm font-medium text-white">Email</label>
                       <input type="email" name="email" id="email" class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400" placeholder="name@mail.com" required="">
+                  </div>
+                  <div>
+                      <label for="username" class="block mb-2 text-sm font-medium text-white">Username</label>
+                      <input type="text" name="username" id="username" class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400" placeholder="poweruser" required="">
                   </div>
                   <div>
                       <label for="password" class="block mb-2 text-sm font-medium text-white">Password</label>
@@ -19,7 +23,7 @@
                   </div>
                   <div>
                       <label for="confirm" class="block mb-2 text-sm font-medium text-white">Confirm password</label>
-                      <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400" required="">
+                      <input type="password" name="confirm" id="confirm" placeholder="••••••••" class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400" required="">
                   </div>
                   <div>
                       <label class="block mb-2 text-sm font-medium text-white">Date of Birth</label>
@@ -135,6 +139,24 @@
                           </div>
                       </div>
                   </div>
+                  <div class="grid grid-cols-2 gap-3">
+                  <div>
+                      <label for="weight" class="block mb-2 text-sm font-medium text-white">Weight</label>
+                      <input type="number" name="weight" id="weight" class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400" placeholder="Indicate in kilograms" required="">
+                  </div>
+                  <div>
+                      <label for="height" class="block mb-2 text-sm font-medium text-white">Height</label>
+                      <input type="number" name="height" id="height" class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400" placeholder="Height in centimeters" required="">
+                  </div>
+                  </div>
+                  <div>
+                    <select id="goal" name="goal" class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400" required="">
+                                  <option value="" disabled selected class="text-gray-400">Goal</option>
+                                  <option value="LOSE">Lose weight</option>
+                                  <option value="GAIN">Gain weight</option>
+                                  <option value="HEALTHY">Stay healthy</option>
+                              </select>
+                  </div>
                   <div class="flex items-center justify-between">
                       <div class="flex items-start">
                           <div class="flex items-center h-5">
@@ -149,8 +171,9 @@
                   </div>
                   <button type="submit" class="w-full bg-lime-400 text-black font-semibold rounded-xl px-8 py-3.5 hover:bg-lime-300 hover:cursor-pointer transition-colors shadow-lg">Register</button>
                   <p class="text-sm font-light text-gray-300 text-center">
-                  <a href="/login" class="object-center text-xl items-center text-lime-600 dark:text-lime-500">
-                    Already have an account?</a>
+                  <button type="button" routerLink="/login" class="object-center text-xl items-center hover:cursor-pointer text-lime-600 dark:text-lime-500">
+                    Already have an account?
+                  </button>
                   </p>
               </form>
           </div>

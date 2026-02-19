@@ -6,14 +6,4 @@ import { ApiService } from '../api.service';
   imports: [RouterLink],
   templateUrl: './home.html',
 })
-export class Home {
-  message = '';
-
-  constructor(private api: ApiService) {
-    this.api.getMessage().subscribe({
-      next: (res) => (this.message = res),
-      error: (err) => (this.message = 'Error fetching message'),
-      complete: () => console.log('Fetch complete!'),
-    });
-  }
-}
+export class Home {}
