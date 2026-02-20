@@ -8,14 +8,14 @@
               <h1 class="text-2xl font-bold leading-tight tracking-tight text-white md:text-3xl">
                   Sign in to your account
               </h1>
-              <form class="space-y-4 md:space-y-6" action="#">
+              <form class="space-y-4 md:space-y-6" (ngSubmit)="onSubmit()">
                   <div>
                       <label for="email" class="block mb-2 text-sm font-medium text-white">Your email</label>
-                      <input type="email" name="email" id="email" class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400" placeholder="name@mail.com" required="">
+                      <input type="email" name="email" id="email" [(ngModel)]="email" class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400" placeholder="name@mail.com" required="">
                   </div>
                   <div>
                       <label for="password" class="block mb-2 text-sm font-medium text-white">Password</label>
-                      <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400" required="">
+                      <input type="password" name="password" id="password" [(ngModel)]="password" placeholder="••••••••" class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400" required="">
                   </div>
                   <div class="flex items-center justify-between">
                       <div class="flex items-start">
@@ -26,11 +26,11 @@
                             <label for="remember" class="text-gray-300">Remember me</label>
                           </div>
                       </div>
-                      <a href="#" class="text-sm font-medium text-lime-400 hover:text-lime-300 transition-colors">Forgot password?</a>
+                      <button routerLink="/home" class="text-sm font-medium text-lime-400 hover:text-lime-300 transition-colors">Forgot password?</button>
                   </div>
                   <button type="submit" class="w-full bg-lime-400 text-black font-semibold rounded-xl px-8 py-3.5 hover:bg-lime-300 hover:cursor-pointer transition-colors shadow-lg">Sign in</button>
                   <p class="text-sm font-light text-gray-300">
-                      Don't have an account yet? <a href="/register" class="font-medium text-lime-400 hover:text-lime-300 underline transition-colors">Sign up</a>
+                      Don't have an account yet? <button routerLink="/register" class="font-medium text-lime-400 hover:text-lime-300 underline transition-colors">Sign up</button>
                   </p>
               </form>
           </div>
