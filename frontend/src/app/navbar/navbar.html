@@ -1,39 +1,42 @@
 <nav class="bg-neutral-primary fixed w-full z-20 top-0 inset-s-0 border-b border-default">
-  <div class="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-4">
+  <div class="max-w-8xl flex flex-wrap items-center justify-between mx-auto p-4">
     <a routerLink="/home" class="flex items-center space-x-3 rtl:space-x-reverse">
-      <img src="/logo.png" class="h-10 " alt="Xtrail Logo" />
+      <img src="/logo.png" class="h-15 " alt="Xtrail Logo" />
     </a>
     <div class="flex items-center md:order-2 space-x-3 rtl:space-x-reverse">
+
       <!-- Notification Bell -->
       <button type="button" class="p-2 text-white hover:text-gray-300 hover:bg-neutral-tertiary-medium rounded-full transition-colors">
         <span class="sr-only">View notifications</span>
-        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
         </svg>
       </button>
 
       <!-- User Menu -->
       <div class="relative">
-        <button type="button" (click)="toggleDropdown()" class="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary">
+        <button type="button" (click)="toggleDropdown()" class="p-2 bg-lime-400 text-black hover:bg-lime-300 rounded-full transition-colors">
           <span class="sr-only">Open user menu</span>
-          <img class="w-8 h-8 rounded-full" src="https://ui-avatars.com/api/?name=User&background=a3e635&color=000" alt="user photo">
+          <svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+          </svg>
         </button>
 
         <!-- Dropdown menu -->
         @if (isDropdownOpen) {
-          <div class="absolute right-0 mt-2 z-50 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44">
+          <div class="absolute bg-zinc-900 right-0 mt-2 z-50 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44">
             <ul class="p-2 text-sm text-white font-medium">
               <li>
-                <button routerLink="/profile" (click)="closeDropdown()" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Dashboard</button>
+                <button routerLink="/profile" (click)="closeDropdown()" class="inline-flex items-center w-full p-2 hover:bg-lime-600 hover:text-heading rounded">Dashboard</button>
               </li>
               <li>
-                <button routerLink="/settings" (click)="closeDropdown()" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Settings</button>
+                <button routerLink="/settings" (click)="closeDropdown()" class="inline-flex items-center w-full p-2 hover:bg-lime-600 hover:text-heading rounded">Settings</button>
               </li>
               <li>
-                <button routerLink="/achievements" (click)="closeDropdown()" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Achievements</button>
+                <button routerLink="/achievements" (click)="closeDropdown()" class="inline-flex items-center w-full p-2 hover:bg-lime-600 hover:text-heading rounded">Achievements</button>
               </li>
               <li>
-                <button (click)="logout()" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Sign out</button>
+                <button (click)="logout()" class="inline-flex items-center w-full p-2 hover:bg-lime-600 hover:text-heading rounded">Sign out</button>
               </li>
             </ul>
           </div>
