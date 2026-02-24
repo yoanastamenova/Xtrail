@@ -1,6 +1,8 @@
 <section class="w-full min-h-screen bg-zinc-950">
   <!-- Navbar -->
-  <app-navbar />
+   <div>
+     <app-navbar />
+   </div>
 
   <!-- Main content with padding for fixed navbar -->
   <main class="pt-24 px-6 max-w-4xl mx-auto">
@@ -11,6 +13,14 @@
       <button routerLink="/runs/new" class="bg-lime-400 text-black font-semibold px-6 py-3 rounded-lg hover:bg-lime-300 hover:cursor-pointer transition-colors">
         Start a Run
       </button>
+    </section>
+
+    <!-- Distance Graph -->
+    <section class="py-8">
+      <h2 class="text-xl font-semibold text-white mb-4">Distance Over Time</h2>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 h-64">
+        <canvas #distanceChart></canvas>
+      </div>
     </section>
 
     <!-- Running stats -->
@@ -26,6 +36,21 @@
 
     <!-- Achievements -->
     <section class="py-8">
+      <h2 class="text-xl font-semibold text-white mb-4">Achievements</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <app-achievements-card
+          title="First Steps"
+          description="Complete your first run"
+          icon="🏃"
+          [unlocked]="true"
+        />
+        <app-achievements-card
+          title="10K Club"
+          description="Run a total of 10km"
+          icon="🎯"
+          [unlocked]="false"
+        />
+      </div>
     </section>
   </main>
 </section>
