@@ -15,7 +15,13 @@
 
     <!-- Running stats -->
     <section class="py-8">
-      
+      <h2 class="text-xl font-semibold text-white mb-4">Your Stats</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <app-runs-card label="Total Runs" [value]="12" />
+        <app-runs-card label="This Week" [value]="3" unit="runs" />
+        <app-runs-card label="Total Distance" [value]="84.5" unit="km" />
+        <app-runs-card label="Avg Pace" [value]="5.2" unit="/km" />
+      </div>
     </section>
 
     <!-- Achievements -->

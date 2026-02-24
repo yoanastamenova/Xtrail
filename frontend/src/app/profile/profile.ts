@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Navbar } from '../navbar/navbar';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../service/auth-service';
+import { RunsCard } from '../shared/components/runs-card/runs-card';
 
 @Component({
   selector: 'app-profile',
-  imports: [Navbar, RouterLink],
+  imports: [Navbar, RouterLink, RunsCard],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
