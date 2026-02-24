@@ -1,18 +1,25 @@
 <section class="w-full min-h-screen bg-zinc-950">
-    <!-- Navbar -->
-    <app-navbar />
+  <!-- Navbar -->
+  <app-navbar />
 
+  <!-- Main content with padding for fixed navbar -->
+  <main class="pt-24 px-6 max-w-4xl mx-auto">
     <!-- Greeting and shortcut to new run -->
-    <section class="...">
-      <div>Welcome, {{ user }}!</div>
-      <button routerLink="/runs/new">Start</button>
+    <section class="text-center py-12">
+      <h1 class="text-3xl font-bold text-white mb-4">Welcome, {{ user?.username }}!</h1>
+      <p class="text-zinc-400 mb-6">Ready for your next run?</p>
+      <button routerLink="/runs/new" class="bg-lime-400 text-black font-semibold px-6 py-3 rounded-lg hover:bg-lime-300 hover:cursor-pointer transition-colors">
+        Start a Run
+      </button>
     </section>
 
     <!-- Running stats -->
-    <section>
+    <section class="py-8">
+      
     </section>
 
     <!-- Achievements -->
-    <section>
+    <section class="py-8">
     </section>
-  </section>
+  </main>
+</section>

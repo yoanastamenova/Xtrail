@@ -26,6 +26,7 @@ export class Login {
     this.authService.login(email, password).subscribe({
       next: (response: any) => {
         this.authService.saveToken(response.access_token);
+        this.authService.saveUser(response.user);
         this.router.navigate(['/profile']);
       },
       error: (err) => console.log('Login failed', err)

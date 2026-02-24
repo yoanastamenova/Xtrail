@@ -23,12 +23,21 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
+  saveUser(user: { id: number; username: string; email: string }){
+    localStorage.setItem('user', JSON.stringify(user));
+}
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
+  getUser(): { id: number; username: string; email: string } | null {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  }
+
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
   isLoggedIn(): boolean {
