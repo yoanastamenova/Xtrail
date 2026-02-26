@@ -58,7 +58,7 @@ export class User {
   })
   goal: UserGoal;
 
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   resetPasswordToken: string | null;
 
   @Column({ type: 'timestamp', nullable: true })
