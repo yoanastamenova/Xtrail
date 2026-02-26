@@ -20,7 +20,12 @@ export class EmailService {
   }
 
   async sendPasswordResetEmail(to: string, resetUrl: string) {
-    const templatePath = path.join(__dirname, 'reset-password.html');
+    const templatePath = path.join(
+      process.cwd(),
+      'src',
+      'email',
+      'reset-password.html',
+    );
     let html = fs.readFileSync(templatePath, 'utf-8');
     html = html.replace(/{{resetUrl}}/g, resetUrl);
 
