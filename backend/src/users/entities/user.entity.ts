@@ -58,6 +58,12 @@ export class User {
   })
   goal: UserGoal;
 
+  @Column({ nullable: true })
+  resetPasswordToken: string | null;
+
+  @Column({ type: 'timestamp', nullable: true })
+  resetPasswordExpires: Date | null;
+
   @OneToMany(() => Run, (run) => run.user)
   runs: Run[];
 
