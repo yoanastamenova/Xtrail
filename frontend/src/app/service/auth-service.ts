@@ -23,9 +23,9 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
-  saveUser(user: { id: number; username: string; email: string }){
+  saveUser(user: { id: number; username: string; email: string }) {
     localStorage.setItem('user', JSON.stringify(user));
-}
+  }
   getToken(): string | null {
     return localStorage.getItem('token');
   }
@@ -33,6 +33,14 @@ export class AuthService {
   getUser(): { id: number; username: string; email: string } | null {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
+  }
+
+  forgotPassword(email: string) {
+    return this.http.post(`${this.apiUrl}/auth/forgot-password`, { email });
+  }
+
+  resetPassword(token: string, password: string) {
+    return this.http.post(`${this.apiUrl}/auth/reset-password`, { token, password });
   }
 
   logout() {
