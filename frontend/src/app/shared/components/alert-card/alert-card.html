@@ -1,0 +1,33 @@
+<div
+  class="border rounded-xl p-4 flex gap-3 my-10"
+  [class.bg-red-900/30]="type === 'error'"
+  [class.border-red-800]="type === 'error'"
+  [class.bg-amber-900/30]="type === 'warning'"
+  [class.border-amber-800]="type === 'warning'"
+>
+  <!-- Icon -->
+  <span
+    class="text-l"
+    [class.text-red-400]="type === 'error'"
+    [class.text-amber-400]="type === 'warning'"
+  >
+    @switch (type) {
+      @case ('error') { ✕ }
+      @case ('warning') { ⚠ }
+    }
+  </span>
+
+  <!-- Content -->
+  <div class="flex-1">
+    @if (title) {
+      <p
+        class="font-semibold mb-1"
+        [class.text-red-400]="type === 'error'"
+        [class.text-amber-400]="type === 'warning'"
+      >
+        {{ title }}
+      </p>
+    }
+    <p class="text-zinc-300 text-l">{{ message }}</p>
+  </div>
+</div>
