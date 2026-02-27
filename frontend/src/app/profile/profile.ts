@@ -5,6 +5,8 @@ import { AuthService } from '../service/auth-service';
 import { RunsCard } from '../shared/components/runs-card/runs-card';
 import { AchievementsCard } from '../shared/components/achievements-card/achievements-card';
 import { Chart, registerables } from 'chart.js';
+import { RunsService } from '../service/runs-service';
+import { RunInterface } from '../interfaces/run.interface';
 
 Chart.register(...registerables);
 
@@ -14,53 +16,76 @@ Chart.register(...registerables);
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
-export class Profile implements OnInit, AfterViewInit {
+export class Profile implements OnInit {
   user: { id: number; username: string; email: string } | null = null;
   @ViewChild('distanceChart') chartRef!: ElementRef<HTMLCanvasElement>;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private runService: RunsService,
+  ) {}
+
+  runs: RunInterface[] = [];
+  stats: any = null;
 
   ngOnInit() {
     this.user = this.authService.getUser();
-  }
 
-  ngAfterViewInit() {
-    this.createChart();
+    this.runService.getRuns().subscribe((data: any) => {
+      this.runs = data;
+      this.createChart();
+    });
+
+    this.runService.getStats().subscribe((data: any) => {
+      this.stats = {
+        ...data,
+        averageDistance: Math.round(data.averageDistance * 100) / 100,
+      };
+    });
   }
 
   createChart() {
-    // Example data - replace with real data from your runs API
-    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    const data = [5.2, 0, 8.1, 3.5, 0, 12.4, 6.3];
+    const sortedRuns = [...this.runs].sort(
+      (a, b) => new Date(a.createdAt!).getTime() - new Date(b.createdAt!).getTime(),
+    );
+    const labels = sortedRuns.map((run) =>
+      new Date(run.createdAt!).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    );
+    const data = sortedRuns.map((run) => run.distance);
 
     new Chart(this.chartRef.nativeElement, {
-      type: 'bar',
+      type: 'line',
       data: {
         labels,
-        datasets: [{
-          label: 'Distance (km)',
-          data,
-          backgroundColor: '#a3e635',
-          borderRadius: 6,
-        }]
+        datasets: [
+          {
+            label: 'Distance (km)',
+            data,
+            borderColor: '#a3e635',
+            backgroundColor: 'rgba(163, 230, 53, 0.1)',
+            fill: true,
+            tension: 0.3,
+            pointBackgroundColor: '#a3e635',
+          },
+        ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: false }
+          legend: { display: false },
         },
         scales: {
           x: {
             ticks: { color: '#a1a1aa' },
-            grid: { display: false }
+            grid: { display: false },
           },
           y: {
             ticks: { color: '#a1a1aa' },
-            grid: { color: '#27272a' }
-          }
-        }
-      }
+            grid: { color: '#27272a' },
+          },
+        },
+      },
     });
   }
 }
