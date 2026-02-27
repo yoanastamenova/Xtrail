@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { RunInterface } from "../interfaces/run.interface";
 import { Observable } from "rxjs";
+import { RunInterface } from "../../interfaces/run.interface";
 
 @Injectable({
   providedIn: 'root',

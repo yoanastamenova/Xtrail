@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../service/auth-service';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AlertCard } from '../shared/components/alert-card/alert-card';
+import { AlertCard } from '../../../shared/components/alert-card/alert-card';
+import { AuthService } from '../../../core/services/auth-service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class Login {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   loginError = '';
@@ -42,7 +42,7 @@ export class Login {
       },
       error: () => {
         this.loginError = 'Invalid email or password.';
-      }
+      },
     });
   }
 }

@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { Navbar } from '../navbar/navbar';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../service/auth-service';
-import { RunsCard } from '../shared/components/runs-card/runs-card';
-import { AchievementsCard } from '../shared/components/achievements-card/achievements-card';
+import { RunsCard } from '../../shared/components/runs-card/runs-card';
+import { AchievementsCard } from '../../shared/components/achievements-card/achievements-card';
 import { Chart, registerables } from 'chart.js';
-import { RunsService } from '../service/runs-service';
-import { RunInterface } from '../interfaces/run.interface';
+import { RunInterface } from '../../interfaces/run.interface';
+import { AuthService } from '../../core/services/auth-service';
+import { RunsService } from '../../core/services/runs-service';
+import { Navbar } from '../../shared/components/navbar/navbar';
 
 Chart.register(...registerables);
 
@@ -33,8 +33,8 @@ export class Profile implements OnInit {
 
     this.runService.getRuns().subscribe((data: any) => {
       this.runs = data;
-      if( this.runs.length > 0) {
-      this.createChart();
+      if (this.runs.length > 0) {
+        this.createChart();
       }
     });
 

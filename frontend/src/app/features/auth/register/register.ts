@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { UserGoal } from '../interfaces/user.interface';
-import { AuthService } from '../service/auth-service';
+import { UserGoal } from '../../../interfaces/user.interface';
+import { AuthService } from '../../../core/services/auth-service';
+
 @Component({
   selector: 'app-register',
   imports: [RouterLink, FormsModule],
@@ -24,17 +25,17 @@ export class Register {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   onSubmit() {
-    if(this.password !== this.confirmPassword) {
+    if (this.password !== this.confirmPassword) {
       console.error('Passwords do not match');
       return;
     }
 
     const birthDate = new Date(+this.year, +this.month - 1, +this.day);
-    const age = Math.floor((Date.now() - birthDate.getTime()) / (365.25 * 24 * 60 * 60 * 1000))
+    const age = Math.floor((Date.now() - birthDate.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
 
     const formData = {
       email: this.email,
@@ -43,12 +44,12 @@ export class Register {
       age: age,
       weight: this.weight,
       height: this.height,
-      goal: this.goal
-    }
+      goal: this.goal,
+    };
 
     this.authService.register(formData).subscribe({
-    next: () => this.router.navigate(['/login']),
-    error: (err) => console.error('Registration failed', err)
-  });
+      next: () => this.router.navigate(['/login']),
+      error: (err) => console.error('Registration failed', err),
+    });
   }
 }
