@@ -8,10 +8,6 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   private apiUrl = 'http://localhost:3000';
   constructor(private http: HttpClient) {}
-  getMessage() {
-    return this.http.get(`${this.apiUrl}`, { responseType: 'text' });
-  }
-
   register(data: UserInterface) {
     return this.http.post(`${this.apiUrl}/auth/register`, data);
   }
