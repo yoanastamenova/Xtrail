@@ -33,7 +33,9 @@ export class Profile implements OnInit {
 
     this.runService.getRuns().subscribe((data: any) => {
       this.runs = data;
+      if( this.runs.length > 0) {
       this.createChart();
+      }
     });
 
     this.runService.getStats().subscribe((data: any) => {

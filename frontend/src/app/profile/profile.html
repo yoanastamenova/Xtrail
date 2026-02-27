@@ -1,10 +1,7 @@
 <section class="w-full min-h-screen bg-zinc-950">
-  <!-- Navbar -->
   <div>
     <app-navbar />
   </div>
-
-  <!-- Main content with padding for fixed navbar -->
   <main class="pt-24 px-6 max-w-4xl mx-auto">
     <!-- Greeting and shortcut to new run -->
     <section class="text-center py-12">
@@ -22,7 +19,13 @@
     <section class="py-8">
       <h2 class="text-xl font-semibold text-white mb-4">Distance Over Time</h2>
       <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 h-64">
-        <canvas #distanceChart></canvas>
+        @if (runs.length > 0) {
+          <canvas #distanceChart></canvas>
+        } @else {
+          <div class="flex items-center justify-center h-full text-zinc-400">
+            No runs recorded yet. Start your first run!
+          </div>
+        }
       </div>
     </section>
 
