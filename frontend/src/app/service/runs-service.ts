@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { RunInterface } from "../interfaces/run.interface";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,8 @@ export class RunsService {
     return this.http.post(`${this.apiUrl}/runs/new`, data);
   }
 
-  getRuns(){
-    return this.http.get(`${this.apiUrl}/runs/all`);
+  getRuns(): Observable<RunInterface[]>{
+    return this.http.get<RunInterface[]>(`${this.apiUrl}/runs/all`);
   }
 
   getStats(){
