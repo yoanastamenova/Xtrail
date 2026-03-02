@@ -38,4 +38,10 @@ export class AllRuns implements OnInit {
       year: 'numeric',
     });
   }
+
+  formatPace(secondsPerKm: number): string {
+    const mins = Math.floor(secondsPerKm / 60);
+    const secs = secondsPerKm % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
 }

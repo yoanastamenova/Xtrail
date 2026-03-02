@@ -46,11 +46,11 @@ export class NewRun {
 
   private calculateStats() {
     const distanceKm = this.runData.distance;
-    const durationMinutes = this.runData.duration / 60;
+    const durationSeconds = this.runData.duration;
 
-    // Pace: minutes per km
+    // Pace: seconds per km (as integer)
     if (distanceKm > 0) {
-      this.runData.pace = Math.round((durationMinutes / distanceKm) * 100) / 100;
+      this.runData.pace = Math.round(durationSeconds / distanceKm);
     }
 
     // 60 kcal per km
@@ -88,6 +88,12 @@ export class NewRun {
       return `${hrs}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  formatPace(secondsPerKm: number): string {
+    const mins = Math.floor(secondsPerKm / 60);
+    const secs = secondsPerKm % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   }
 
   saveRun() {
