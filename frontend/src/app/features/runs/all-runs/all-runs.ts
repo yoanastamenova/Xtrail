@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RunsService } from '../../../core/services/runs-service';
 
 @Component({
   selector: 'app-all-runs',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './all-runs.css',
 })
 export class AllRuns {
-
+  constructor(private runService: RunsService) {}
 }

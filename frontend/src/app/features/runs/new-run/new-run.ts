@@ -18,7 +18,7 @@ export class NewRun {
   ) {}
 
   runData = {
-    distance: 0,
+    distance: 0.1,
     duration: 0,
     pace: 0,
     calories: 0,
