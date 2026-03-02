@@ -38,6 +38,14 @@
         <app-runs-card label="Total Distance" [value]="stats?.totalDistance || 0" unit="km" />
         <app-runs-card label="Avg Distance" [value]="stats?.averageDistance || 0" unit="km" />
       </div>
+      <div class="flex justify-end mt-4">
+        <button
+          routerLink="/runs/all"
+          class="border border-lime-400 text-lime-400 font-semibold px-6 py-3 rounded-lg hover:bg-lime-400 hover:text-black hover:cursor-pointer transition-colors"
+        >
+          See all runs
+        </button>
+      </div>
     </section>
 
     <!-- Achievements -->
