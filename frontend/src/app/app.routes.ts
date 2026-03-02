@@ -6,6 +6,8 @@ import { Profile } from './features/profile/profile';
 import { ForgotPassword } from './features/auth/forgot-password/forgot-password';
 import { ResetPassword } from './features/auth/reset-password/reset-password';
 import { authGuard } from './core/guards/auth.guard';
+import { NewRun } from './features/runs/new-run/new-run';
+import { AllRuns } from './features/runs/all-runs/all-runs';
 
 export const routes: Routes = [
   {
@@ -38,5 +40,17 @@ export const routes: Routes = [
     path: 'reset-password',
     component: ResetPassword,
     title: 'Reset password',
+  },
+  {
+    path: 'runs/new',
+    component: NewRun,
+    canActivate: [authGuard],
+    title: 'New run',
+  },
+  {
+    path: 'runs/all',
+    component: AllRuns,
+    canActivate: [authGuard],
+    title: 'All Runs',
   },
 ];

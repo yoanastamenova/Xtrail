@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { RunsCard } from '../../shared/components/runs-card/runs-card';
 import { AchievementsCard } from '../../shared/components/achievements-card/achievements-card';
@@ -23,6 +23,7 @@ export class Profile implements OnInit {
   constructor(
     private authService: AuthService,
     private runService: RunsService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   runs: RunInterface[] = [];
@@ -34,6 +35,7 @@ export class Profile implements OnInit {
     this.runService.getRuns().subscribe((data: any) => {
       this.runs = data;
       if (this.runs.length > 0) {
+        this.cdr.detectChanges();
         this.createChart();
       }
     });
