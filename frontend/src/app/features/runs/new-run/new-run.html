@@ -1,1 +1,95 @@
-<p>new-run works!</p>
+<section class="w-full min-h-screen bg-zinc-950">
+  <div>
+    <app-navbar />
+  </div>
+  @switch (currentState) {
+    @case ('pre-run') {
+      <div class="flex flex-col items-center justify-center pt-24 px-6">
+        <h1 class="text-2xl font-bold text-white mb-8 mt-30">Ready to run?</h1>
+        <button
+          (click)="startRun()"
+          class="w-32 h-32 rounded-full border-4 border-lime-400 text-lime-400 font-bold text-xl hover:bg-lime-400 hover:text-black hover:cursor-pointer transition-colors"
+        >
+          START
+        </button>
+      </div>
+    }
+    @case ('active') {
+      <div class="flex flex-col items-center justify-center pt-24 px-6">
+        <!-- Timer display -->
+        <div class="text-6xl font-bold text-white mb-8 font-mono">
+          {{ formatTime(elapsedSeconds) }}
+        </div>
+
+        <!-- Distance input -->
+        <div class="w-full max-w-md mb-8">
+          <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+            <p class="text-zinc-400 text-sm mb-2">Distance</p>
+            <p class="text-white text-4xl font-bold mb-4">{{ runData.distance }} km</p>
+            <input
+              type="range"
+              [(ngModel)]="runData.distance"
+              min="0"
+              max="10"
+              step="0.1"
+              class="w-full accent-lime-400"
+            />
+            <div class="flex justify-between text-zinc-500 text-sm mt-1">
+              <span>0 km</span>
+              <span>10 km</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Control buttons -->
+        <div class="flex gap-4">
+          <button
+            (click)="pauseRun()"
+            class="border border-yellow-400 text-yellow-400 font-semibold px-6 py-3 rounded-lg hover:bg-yellow-400 hover:text-black hover:cursor-pointer transition-colors"
+          >
+            {{ isPaused ? 'RESUME' : 'PAUSE' }}
+          </button>
+          <button
+            (click)="stopRun()"
+            class="border border-red-400 text-red-400 font-semibold px-6 py-3 rounded-lg hover:bg-red-400 hover:text-black hover:cursor-pointer transition-colors"
+          >
+            FINISH
+          </button>
+        </div>
+      </div>
+    }
+    @case ('summary') {
+      <div class="flex flex-col items-center justify-center pt-24 px-6">
+        <h1 class="text-2xl font-bold text-white mb-8">Run Complete!</h1>
+
+        <!-- Stats cards -->
+        <div class="grid grid-cols-2 gap-4 mb-8 w-full max-w-md">
+          <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center">
+            <p class="text-zinc-400 text-sm">Duration</p>
+            <p class="text-white text-2xl font-bold">{{ formatTime(runData.duration) }}</p>
+          </div>
+          <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center">
+            <p class="text-zinc-400 text-sm">Distance</p>
+            <p class="text-white text-2xl font-bold">{{ runData.distance }} km</p>
+          </div>
+          <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center">
+            <p class="text-zinc-400 text-sm">Pace</p>
+            <p class="text-white text-2xl font-bold">{{ runData.pace }} min/km</p>
+          </div>
+          <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center">
+            <p class="text-zinc-400 text-sm">Calories</p>
+            <p class="text-white text-2xl font-bold">{{ runData.calories }} kcal</p>
+          </div>
+        </div>
+
+        <!-- Save button -->
+        <button
+          (click)="saveRun()"
+          class="bg-lime-400 text-black font-semibold px-8 py-3 rounded-lg hover:bg-lime-300 hover:cursor-pointer transition-colors"
+        >
+          Save Run
+        </button>
+      </div>
+    }
+  }
+</section>
