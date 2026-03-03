@@ -8,6 +8,7 @@ import { ResetPassword } from './features/auth/reset-password/reset-password';
 import { authGuard } from './core/guards/auth.guard';
 import { NewRun } from './features/runs/new-run/new-run';
 import { AllRuns } from './features/runs/all-runs/all-runs';
+import { ViewRun } from './features/runs/view-run/view-run';
 
 export const routes: Routes = [
   {
@@ -52,5 +53,11 @@ export const routes: Routes = [
     component: AllRuns,
     canActivate: [authGuard],
     title: 'All Runs',
+  },
+  {
+    path: 'runs/:id',
+    component: ViewRun,
+    canActivate: [authGuard],
+    title: 'View run details',
   },
 ];
