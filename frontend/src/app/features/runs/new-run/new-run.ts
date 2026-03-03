@@ -55,6 +55,9 @@ export class NewRun {
 
     // 60 kcal per km
     this.runData.calories = Math.round(distanceKm * 60);
+
+    // Elevation: ~15-30 meters per km
+    this.runData.elevation = Math.round(distanceKm * (15 + Math.random() * 15));
   }
 
   pauseRun() {
