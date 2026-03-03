@@ -34,7 +34,10 @@ export class RunsService {
     });
     const savedRun = await this.runRepository.save(run);
 
-    await this.checkAchievements(userId, savedRun);
+    // Non-blocking: don't fail the request if achievements fail
+    this.checkAchievements(userId, savedRun).catch((err) => {
+      console.warn('Achievement check failed:', err.message);
+    });
 
     return savedRun;
   }

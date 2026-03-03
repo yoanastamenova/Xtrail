@@ -1,16 +1,16 @@
 <section class="w-full min-h-screen bg-zinc-950">
-  <!-- Navbar -->
-   <div>
-     <app-navbar />
-   </div>
-
-  <!-- Main content with padding for fixed navbar -->
+  <div>
+    <app-navbar />
+  </div>
   <main class="pt-24 px-6 max-w-4xl mx-auto">
     <!-- Greeting and shortcut to new run -->
     <section class="text-center py-12">
       <h1 class="text-3xl font-bold text-white mb-4">Welcome, {{ user?.username }}!</h1>
       <p class="text-zinc-400 mb-6">Ready for your next run?</p>
-      <button routerLink="/runs/new" class="bg-lime-400 text-black font-semibold px-6 py-3 rounded-lg hover:bg-lime-300 hover:cursor-pointer transition-colors">
+      <button
+        routerLink="/runs/new"
+        class="bg-lime-400 text-black font-semibold px-6 py-3 rounded-lg hover:bg-lime-300 hover:cursor-pointer transition-colors"
+      >
         Start a Run
       </button>
     </section>
@@ -19,7 +19,13 @@
     <section class="py-8">
       <h2 class="text-xl font-semibold text-white mb-4">Distance Over Time</h2>
       <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 h-64">
-        <canvas #distanceChart></canvas>
+        @if (runs.length > 0) {
+          <canvas #distanceChart></canvas>
+        } @else {
+          <div class="flex items-center justify-center h-full text-zinc-400">
+            No runs recorded yet. Start your first run!
+          </div>
+        }
       </div>
     </section>
 
@@ -27,10 +33,18 @@
     <section class="py-8">
       <h2 class="text-xl font-semibold text-white mb-4">Your Stats</h2>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <app-runs-card label="Total Runs" [value]="12" />
-        <app-runs-card label="This Week" [value]="3" unit="runs" />
-        <app-runs-card label="Total Distance" [value]="84.5" unit="km" />
-        <app-runs-card label="Avg Pace" [value]="5.2" unit="/km" />
+        <app-runs-card label="Total Runs" [value]="stats?.totalRuns || 0" unit="runs" />
+        <app-runs-card label="Longest Run" [value]="stats?.longestRun || 0" unit="km" />
+        <app-runs-card label="Total Distance" [value]="stats?.totalDistance || 0" unit="km" />
+        <app-runs-card label="Avg Distance" [value]="stats?.averageDistance || 0" unit="km" />
+      </div>
+      <div class="flex justify-end mt-4">
+        <button
+          routerLink="/runs/all"
+          class="border border-lime-400 text-lime-400 font-semibold px-6 py-3 rounded-lg hover:bg-lime-400 hover:text-black hover:cursor-pointer transition-colors"
+        >
+          See all runs
+        </button>
       </div>
     </section>
 

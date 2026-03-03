@@ -4,7 +4,7 @@ import { IsNumber, Min } from 'class-validator';
 export class CreateRunDto {
   @ApiProperty({ example: 5.25, description: 'Distance in kilometers' })
   @IsNumber()
-  @Min(10)
+  @Min(0.1)
   distance: number;
 
   @ApiProperty({
