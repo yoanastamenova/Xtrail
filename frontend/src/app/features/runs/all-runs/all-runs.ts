@@ -3,6 +3,7 @@ import { RunsService } from '../../../core/services/runs-service';
 import { RunInterface } from '../../../interfaces/run.interface';
 import { Navbar } from '../../../shared/components/navbar/navbar';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-runs',
@@ -13,7 +14,7 @@ import { DatePipe } from '@angular/common';
 export class AllRuns implements OnInit {
   runs: RunInterface[] = [];
 
-  constructor(private runService: RunsService) {}
+  constructor(private runService: RunsService, private router: Router) {}
 
   ngOnInit() {
     this.runService.getRuns().subscribe({
@@ -24,6 +25,21 @@ export class AllRuns implements OnInit {
         console.error('Failed to load runs:', err);
       },
     });
+  }
+
+  onDelete(run: RunInterface) {
+    this.runService.deleteRunById(run.id!).subscribe({
+      next: () => {
+        this.runs = this.runs.filter((r) => r.id !== run.id);
+      },
+      error: (err) => {
+        console.error('Failed to delete run:', err);
+      },
+    });
+  }
+
+  onInfo(run: RunInterface) {
+    this.router.navigate([`/runs/${run.id}`]);
   }
 
   formatDuration(seconds: number): string {
