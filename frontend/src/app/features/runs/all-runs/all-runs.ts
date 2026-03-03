@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { RunsService } from '../../../core/services/runs-service';
 import { RunInterface } from '../../../interfaces/run.interface';
 import { Navbar } from '../../../shared/components/navbar/navbar';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-all-runs',
-  imports: [Navbar],
+  imports: [Navbar, DatePipe],
   templateUrl: './all-runs.html',
   styleUrl: './all-runs.css',
 })

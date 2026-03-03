@@ -10,7 +10,7 @@
       @if (runs.length > 0) {
         <div class="space-y-4">
           @for (run of runs; track run.id) {
-            <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+            <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
               <div class="flex justify-between items-start mb-3">
                 <p class="text-zinc-400 text-sm">{{ formatDate(run.createdAt!) }}</p>
               </div>
@@ -30,6 +30,16 @@
                 <div>
                   <p class="text-zinc-500 text-xs">Calories</p>
                   <p class="text-white text-lg font-semibold">{{ run.calories }} kcal</p>
+                </div>
+                <div>
+                  <p class="text-zinc-500 text-xs">Elevation</p>
+                  <p class="text-white text-lg font-semibold">{{ run.elevation }} M</p>
+                </div>
+                <div>
+                  <p class="text-zinc-500 text-xs">Date</p>
+                  <p class="text-white text-lg font-semibold">
+                    {{ run.createdAt | date: 'dd/MM/yyyy' }}
+                  </p>
                 </div>
               </div>
             </div>
