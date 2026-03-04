@@ -57,7 +57,16 @@ export class Settings {
     }
 
     this.authService.updateUser(formData).subscribe({
-      next: () => this.router.navigate(['/profile']),
+      next: () => {
+        // Update localStorage immediately
+        const currentUser = this.authService.getUser();
+        if (currentUser) {
+          if (formData['username']) currentUser.username = formData['username'];
+          if (formData['email']) currentUser.email = formData['email'];
+          this.authService.saveUser(currentUser);
+        }
+        this.router.navigate(['/profile']);
+      },
       error: (err) => console.error('Update failed:', err),
     });
   }
