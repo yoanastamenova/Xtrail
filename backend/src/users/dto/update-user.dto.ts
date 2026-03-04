@@ -1,8 +1,29 @@
-import { IsEnum, IsNumber, IsOptional } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { UserGoal } from '../entities/user.entity';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UpdateUser {
+  @ApiPropertyOptional({ example: 'user@mail.com' })
+  @IsOptional()
+  @IsEmail()
+  email: string;
+
+  @ApiPropertyOptional({ example: 'poweruser' })
+  @IsOptional()
+  @IsString()
+  username: string;
+
+  @ApiPropertyOptional({ example: '*******' })
+  @IsOptional()
+  @IsString()
+  password: string;
+
   @ApiPropertyOptional({ example: 20 })
   @IsOptional()
   @IsNumber()
