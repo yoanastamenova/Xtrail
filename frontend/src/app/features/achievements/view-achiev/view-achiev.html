@@ -2,4 +2,42 @@
   <div>
     <app-navbar />
   </div>
-  <div>Achievsss</div>
+  <main class="pt-24 px-6 max-w-4xl mx-auto">
+    <section class="py-8">
+      <h1 class="text-white font-bold mb-6 text-3xl">Achievements</h1>
+      <p class="text-zinc-400 mb-8">{{ userAchievements.length }} / {{ allAchievements.length }} earned</p>
+      <div class="space-y-4">
+        @for (achievement of sortedAchievements; track achievement.id) {
+          <div class="rounded-xl p-4" [class]="isEarned(achievement) ? 'bg-lime-500/10 border border-lime-500/30' : 'bg-zinc-900 border border-zinc-800 opacity-60'">
+            <div class="flex gap-4">
+              <!-- Icon -->
+              <div class="shrink-0 w-14 h-14 rounded-full flex items-center justify-center"
+                   [class]="isEarned(achievement) ? 'bg-lime-500/20' : 'bg-zinc-700/30'">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" [class]="isEarned(achievement) ? 'text-lime-500' : 'text-zinc-600'" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M5 3h14a1 1 0 011 1v2a7 7 0 01-4 6.33V14a1 1 0 01-.29.71l-2 2A1 1 0 0113 17v2h2a1 1 0 110 2H9a1 1 0 110-2h2v-2a1 1 0 01-.71-.29l-2-2A1 1 0 018 14v-1.67A7 7 0 014 6V4a1 1 0 011-1zm2 2v1a5 5 0 003.33 4.72 1 1 0 01.67.95V14h2v-2.33a1 1 0 01.67-.95A5 5 0 0017 6V5H7z"/>
+                </svg>
+              </div>
+              <!-- Content -->
+              <div class="flex-1">
+                <div class="flex justify-between items-start mb-2">
+                  <div>
+                    <h3 class="text-lg font-semibold" [class]="isEarned(achievement) ? 'text-lime-400' : 'text-zinc-400'">{{ achievement.name }}</h3>
+                    <p class="text-sm" [class]="isEarned(achievement) ? 'text-zinc-300' : 'text-zinc-500'">{{ achievement.description }}</p>
+                  </div>
+                  @if (isEarned(achievement)) {
+                    <span class="px-2 py-1 bg-lime-500/20 text-lime-400 text-xs rounded-full">Earned</span>
+                  } @else {
+                    <span class="px-2 py-1 bg-zinc-800 text-zinc-500 text-xs rounded-full">Locked</span>
+                  }
+                </div>
+                @if (isEarned(achievement)) {
+                  <p class="text-zinc-400 text-xs">Earned on {{ getEarnedDate(achievement) | date: 'MMM d, yyyy' }}</p>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  </main>
+</section>

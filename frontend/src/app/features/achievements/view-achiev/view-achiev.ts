@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Navbar } from '../../../shared/components/navbar/navbar';
 import { AchievementsService } from '../../../core/services/achiev-service';
 import { Achievement, UserAchievement } from '../../../interfaces/achievements.interface';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-view-achiev',
-  imports: [Navbar],
+  imports: [Navbar, DatePipe],
   templateUrl: './view-achiev.html',
   styleUrl: './view-achiev.css',
 })
@@ -31,6 +32,33 @@ export class ViewAchiev implements OnInit {
         this.userAchievements = data;
       }
     })
+  }
+
+  formatDate(date: Date): string {
+    return new Date(date).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  }
+
+  get sortedAchievements(): Achievement[] {
+    return [...this.allAchievements].sort((a, b) => {
+      const aEarned = this.isEarned(a);
+      const bEarned = this.isEarned(b);
+      if (aEarned && !bEarned) return -1;
+      if (!aEarned && bEarned) return 1;
+      return 0;
+    });
+  }
+
+  isEarned(achievement: Achievement): boolean {
+    return this.userAchievements.some(ua => ua.achievement.id === achievement.id);
+  }
+
+  getEarnedDate(achievement: Achievement): Date | null {
+    const ua = this.userAchievements.find(ua => ua.achievement.id === achievement.id);
+    return ua ? ua.createdAt : null;
   }
 
   onDelete(achievement: UserAchievement) {
