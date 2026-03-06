@@ -7,6 +7,8 @@ import { RunInterface } from '../../interfaces/run.interface';
 import { AuthService } from '../../core/services/auth-service';
 import { RunsService } from '../../core/services/runs-service';
 import { Navbar } from '../../shared/components/navbar/navbar';
+import { AchievementsService } from '../../core/services/achiev-service';
+import { UserAchievement } from '../../interfaces/achievements.interface';
 
 Chart.register(...registerables);
 
@@ -24,10 +26,12 @@ export class Profile implements OnInit {
     private authService: AuthService,
     private runService: RunsService,
     private cdr: ChangeDetectorRef,
+    private achievementService: AchievementsService
   ) {}
 
   runs: RunInterface[] = [];
   stats: any = null;
+  achievements: UserAchievement[] = [];
 
   ngOnInit() {
     this.user = this.authService.getUser();
@@ -46,6 +50,10 @@ export class Profile implements OnInit {
         averageDistance: Math.round(data.averageDistance * 100) / 100,
       };
     });
+
+    this.achievementService.getUserAchievements().subscribe((data: UserAchievement[]) => {
+      this.achievements = data;
+    })
   }
 
   createChart() {
