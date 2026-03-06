@@ -9,6 +9,8 @@ import { authGuard } from './core/guards/auth.guard';
 import { NewRun } from './features/runs/new-run/new-run';
 import { AllRuns } from './features/runs/all-runs/all-runs';
 import { ViewRun } from './features/runs/view-run/view-run';
+import { Settings } from './features/profile/settings/settings';
+import { ViewAchiev } from './features/achievements/view-achiev/view-achiev';
 
 export const routes: Routes = [
   {
@@ -59,5 +61,17 @@ export const routes: Routes = [
     component: ViewRun,
     canActivate: [authGuard],
     title: 'View run details',
+  },
+  {
+    path: 'settings',
+    component: Settings,
+    canActivate: [authGuard],
+    title: 'Profile settings',
+  },
+  {
+    path: 'achievements',
+    component: ViewAchiev,
+    canActivate: [authGuard],
+    title: 'Achievements',
   },
 ];

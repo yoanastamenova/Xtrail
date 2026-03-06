@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { Navbar } from '../../../shared/components/navbar/navbar';
 import { RunsService } from '../../../core/services/runs-service';
 import { RunInterface } from '../../../interfaces/run.interface';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-view-run',
@@ -18,10 +19,12 @@ export class ViewRun implements OnInit {
   ) {}
 
   run: RunInterface | null = null;
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.runService.getRunById(id).subscribe({
+    this.runService.getRunById(id).pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
       next: (data) => {
         this.run = data as RunInterface;
       },

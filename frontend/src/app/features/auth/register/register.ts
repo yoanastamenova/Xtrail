@@ -3,14 +3,17 @@ import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UserGoal } from '../../../interfaces/user.interface';
 import { AuthService } from '../../../core/services/auth-service';
+import { LoadingDots } from '../../../shared/components/loading-dots/loading-dots';
 
 @Component({
   selector: 'app-register',
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, LoadingDots],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
 export class Register {
+  isLoading = false;
+
   // Form
   email = '';
   username = '';
@@ -47,9 +50,15 @@ export class Register {
       goal: this.goal,
     };
 
+    this.isLoading = true;
+
     this.authService.register(formData).subscribe({
-      next: () => this.router.navigate(['/login']),
-      error: (err) => console.error('Registration failed', err),
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        ((this.isLoading = false), console.error('Registration failed', err));
+      },
     });
   }
 }

@@ -1,0 +1,267 @@
+<section class="w-full min-h-screen bg-zinc-950">
+  <div>
+    <app-navbar />
+  </div>
+
+  <main class="pt-24 px-6 pb-16 max-w-xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-white">Settings</h1>
+      <p class="text-zinc-400 mt-1">Update only the fields you want to change.</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="space-y-8">
+      <!-- Account Section -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-5">
+        <h2 class="text-lg font-semibold text-white">Account</h2>
+
+        <div>
+          <label for="email" class="block mb-2 text-sm font-medium text-zinc-300">Email</label>
+          <input
+            [(ngModel)]="userData.email"
+            type="email"
+            name="email"
+            id="email"
+            class="bg-gray-800/50 border border-zinc-700 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-zinc-500"
+            placeholder="name@mail.com"
+          />
+        </div>
+
+        <div>
+          <label for="username" class="block mb-2 text-sm font-medium text-zinc-300">Username</label>
+          <input
+            [(ngModel)]="userData.username"
+            type="text"
+            name="username"
+            id="username"
+            class="bg-gray-800/50 border border-zinc-700 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-zinc-500"
+            placeholder="poweruser"
+          />
+        </div>
+      </div>
+
+      <!-- Password Section -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-5">
+        <h2 class="text-lg font-semibold text-white">Change Password</h2>
+
+        <div>
+          <label for="password" class="block mb-2 text-sm font-medium text-zinc-300">New password</label>
+          <input
+            [(ngModel)]="userData.password"
+            type="password"
+            name="password"
+            id="password"
+            placeholder="••••••••"
+            class="bg-gray-800/50 border border-zinc-700 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-zinc-500"
+          />
+        </div>
+
+        <div>
+          <label for="confirm" class="block mb-2 text-sm font-medium text-zinc-300">Confirm password</label>
+          <input
+            [(ngModel)]="userData.confirmPassword"
+            type="password"
+            name="confirm"
+            id="confirm"
+            placeholder="••••••••"
+            class="bg-gray-800/50 border border-zinc-700 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-zinc-500"
+          />
+        </div>
+      </div>
+
+      <!-- Personal Info Section -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-5">
+        <h2 class="text-lg font-semibold text-white">Personal Info</h2>
+
+        <div>
+          <label class="block mb-2 text-sm font-medium text-zinc-300">Date of Birth</label>
+          <div class="grid grid-cols-3 gap-3">
+            <select
+              [(ngModel)]="userData.day"
+              id="day"
+              name="day"
+              class="bg-gray-800/50 border border-zinc-700 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-zinc-500"
+            >
+              <option value="" disabled selected class="text-zinc-500">Day</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30">30</option>
+              <option value="31">31</option>
+            </select>
+            <select
+              [(ngModel)]="userData.month"
+              id="month"
+              name="month"
+              class="bg-gray-800/50 border border-zinc-700 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-zinc-500"
+            >
+              <option value="" disabled selected class="text-zinc-500">Month</option>
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+            <select
+              [(ngModel)]="userData.year"
+              id="year"
+              name="year"
+              class="bg-gray-800/50 border border-zinc-700 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-zinc-500"
+            >
+              <option value="" disabled selected class="text-zinc-500">Year</option>
+              <option value="2010">2010</option>
+              <option value="2009">2009</option>
+              <option value="2008">2008</option>
+              <option value="2007">2007</option>
+              <option value="2006">2006</option>
+              <option value="2005">2005</option>
+              <option value="2004">2004</option>
+              <option value="2003">2003</option>
+              <option value="2002">2002</option>
+              <option value="2001">2001</option>
+              <option value="2000">2000</option>
+              <option value="1999">1999</option>
+              <option value="1998">1998</option>
+              <option value="1997">1997</option>
+              <option value="1996">1996</option>
+              <option value="1995">1995</option>
+              <option value="1994">1994</option>
+              <option value="1993">1993</option>
+              <option value="1992">1992</option>
+              <option value="1991">1991</option>
+              <option value="1990">1990</option>
+              <option value="1989">1989</option>
+              <option value="1988">1988</option>
+              <option value="1987">1987</option>
+              <option value="1986">1986</option>
+              <option value="1985">1985</option>
+              <option value="1984">1984</option>
+              <option value="1983">1983</option>
+              <option value="1982">1982</option>
+              <option value="1981">1981</option>
+              <option value="1980">1980</option>
+              <option value="1979">1979</option>
+              <option value="1978">1978</option>
+              <option value="1977">1977</option>
+              <option value="1976">1976</option>
+              <option value="1975">1975</option>
+              <option value="1974">1974</option>
+              <option value="1973">1973</option>
+              <option value="1972">1972</option>
+              <option value="1971">1971</option>
+              <option value="1970">1970</option>
+              <option value="1969">1969</option>
+              <option value="1968">1968</option>
+              <option value="1967">1967</option>
+              <option value="1966">1966</option>
+              <option value="1965">1965</option>
+              <option value="1964">1964</option>
+              <option value="1963">1963</option>
+              <option value="1962">1962</option>
+              <option value="1961">1961</option>
+              <option value="1960">1960</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fitness Section -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-5">
+        <h2 class="text-lg font-semibold text-white">Fitness</h2>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="weight" class="block mb-2 text-sm font-medium text-zinc-300">Weight (kg)</label>
+            <input
+              [(ngModel)]="userData.weight"
+              type="number"
+              name="weight"
+              id="weight"
+              class="bg-gray-800/50 border border-zinc-700 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-zinc-500"
+              placeholder="e.g. 70"
+            />
+          </div>
+          <div>
+            <label for="height" class="block mb-2 text-sm font-medium text-zinc-300">Height (cm)</label>
+            <input
+              [(ngModel)]="userData.height"
+              type="number"
+              name="height"
+              id="height"
+              class="bg-gray-800/50 border border-zinc-700 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-zinc-500"
+              placeholder="e.g. 175"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="goal" class="block mb-2 text-sm font-medium text-zinc-300">Goal</label>
+          <select
+            [(ngModel)]="userData.goal"
+            id="goal"
+            name="goal"
+            class="bg-gray-800/50 border border-zinc-700 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-zinc-500"
+          >
+            <option value="HEALTHY">Stay healthy</option>
+            <option value="LOSE">Lose weight</option>
+            <option value="GAIN">Gain weight</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-col gap-3">
+        <button
+          type="submit"
+          [disabled]="isLoading"
+          class="w-full bg-lime-400 text-black font-semibold rounded-xl px-8 py-3.5 hover:bg-lime-300 hover:cursor-pointer transition-colors shadow-lg"
+        >
+          @if (isLoading) {
+              Saving<app-loading-dots />
+            } @else {
+              Save changes
+            }
+        </button>
+        <button
+          type="button"
+          routerLink="/profile"
+          class="w-full border border-zinc-700 text-zinc-300 font-semibold rounded-xl px-8 py-3.5 hover:bg-zinc-800 hover:text-white hover:cursor-pointer transition-colors"
+        >
+          Back to Profile
+        </button>
+      </div>
+    </form>
+  </main>

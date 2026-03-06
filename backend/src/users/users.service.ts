@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserRole } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { UpdateUser } from './dto/update-user.dto';
-
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersService {
   constructor(
@@ -49,6 +49,9 @@ export class UsersService {
   //4. Update user
   async updateUser(id: number, updateUser: UpdateUser) {
     await this.findById(id);
+    if (updateUser.password) {
+      updateUser.password = await bcrypt.hash(updateUser.password, 10);
+    }
     await this.userRepository.update(id, updateUser);
     return { message: 'User updated successfully' };
   }

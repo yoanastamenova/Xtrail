@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserInterface } from '../../interfaces/user.interface';
+import { UserGoal, UserInterface } from '../../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +22,7 @@ export class AuthService {
   saveUser(user: { id: number; username: string; email: string }) {
     localStorage.setItem('user', JSON.stringify(user));
   }
+
   getToken(): string | null {
     return localStorage.getItem('token');
   }
@@ -29,6 +30,10 @@ export class AuthService {
   getUser(): { id: number; username: string; email: string } | null {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
+  }
+
+  updateUser(data: Partial<{ email: string; username: string; password: string; age: number; weight: number; height: number; goal: UserGoal }>) {
+    return this.http.patch(`${this.apiUrl}/users/me`, data);
   }
 
   forgotPassword(email: string) {

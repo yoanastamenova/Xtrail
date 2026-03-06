@@ -1,41 +1,62 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { RunsService } from '../../../core/services/runs-service';
 import { RunInterface } from '../../../interfaces/run.interface';
 import { Navbar } from '../../../shared/components/navbar/navbar';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoadingDots } from '../../../shared/components/loading-dots/loading-dots';
 
 @Component({
   selector: 'app-all-runs',
-  imports: [Navbar, DatePipe],
+  imports: [Navbar, DatePipe, LoadingDots],
   templateUrl: './all-runs.html',
   styleUrl: './all-runs.css',
 })
 export class AllRuns implements OnInit {
+  private destroyRef = inject(DestroyRef);
   runs: RunInterface[] = [];
 
-  constructor(private runService: RunsService, private router: Router) {}
+  constructor(
+    private runService: RunsService,
+    private router: Router,
+  ) {}
+
+  isLoading = false;
 
   ngOnInit() {
-    this.runService.getRuns().subscribe({
-      next: (data) => {
-        this.runs = data;
-      },
-      error: (err) => {
-        console.error('Failed to load runs:', err);
-      },
-    });
+    this.isLoading = true;
+
+    this.runService
+      .getRuns()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (data) => {
+          this.runs = data;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.isLoading = false;
+          console.error('Failed to load runs:', err);
+        },
+      });
   }
 
   onDelete(run: RunInterface) {
-    this.runService.deleteRunById(run.id!).subscribe({
-      next: () => {
-        this.runs = this.runs.filter((r) => r.id !== run.id);
-      },
-      error: (err) => {
-        console.error('Failed to delete run:', err);
-      },
-    });
+    this.isLoading = true;
+
+    this.runService
+      .deleteRunById(run.id!)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.runs = this.runs.filter((r) => r.id !== run.id);
+        },
+        error: (err) => {
+          this.isLoading = false;
+          console.error('Failed to delete run:', err);
+        },
+      });
   }
 
   onInfo(run: RunInterface) {
