@@ -3,11 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Navbar } from '../../../shared/components/navbar/navbar';
 import { RunsService } from '../../../core/services/runs-service';
+import { LoadingDots } from '../../../shared/components/loading-dots/loading-dots';
 
 type RunState = 'pre-run' | 'active' | 'summary';
 @Component({
   selector: 'app-new-run',
-  imports: [Navbar, FormsModule],
+  imports: [Navbar, FormsModule, LoadingDots],
   templateUrl: './new-run.html',
   styleUrl: './new-run.css',
 })
@@ -16,6 +17,8 @@ export class NewRun {
     private runService: RunsService,
     private router: Router,
   ) {}
+
+  isLoading = false;
 
   runData = {
     distance: 0.1,
@@ -99,12 +102,16 @@ export class NewRun {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   }
 
+
   saveRun() {
+    this.isLoading = true;
+
     this.runService.createRun(this.runData).subscribe({
       next: () => {
         this.router.navigate(['/profile']);
       },
       error: (err) => {
+        this.isLoading = false;
         console.error('Failed to save run:', err);
       },
     });

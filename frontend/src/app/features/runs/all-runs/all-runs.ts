@@ -5,10 +5,11 @@ import { Navbar } from '../../../shared/components/navbar/navbar';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoadingDots } from '../../../shared/components/loading-dots/loading-dots';
 
 @Component({
   selector: 'app-all-runs',
-  imports: [Navbar, DatePipe],
+  imports: [Navbar, DatePipe, LoadingDots],
   templateUrl: './all-runs.html',
   styleUrl: './all-runs.css',
 })
@@ -21,21 +22,29 @@ export class AllRuns implements OnInit {
     private router: Router,
   ) {}
 
+  isLoading = false;
+
   ngOnInit() {
+    this.isLoading = true;
+
     this.runService
       .getRuns()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data) => {
           this.runs = data;
+          this.isLoading = false;
         },
         error: (err) => {
+          this.isLoading = false;
           console.error('Failed to load runs:', err);
         },
       });
   }
 
   onDelete(run: RunInterface) {
+    this.isLoading = true;
+
     this.runService
       .deleteRunById(run.id!)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -44,6 +53,7 @@ export class AllRuns implements OnInit {
           this.runs = this.runs.filter((r) => r.id !== run.id);
         },
         error: (err) => {
+          this.isLoading = false;
           console.error('Failed to delete run:', err);
         },
       });

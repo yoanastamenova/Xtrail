@@ -5,15 +5,17 @@ import { AuthService } from '../../../core/services/auth-service';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoadingDots } from '../../../shared/components/loading-dots/loading-dots';
 
 @Component({
   selector: 'app-settings',
-  imports: [Navbar, FormsModule, RouterLink],
+  imports: [Navbar, FormsModule, RouterLink, LoadingDots],
   templateUrl: './settings.html',
   styleUrl: './settings.css',
 })
 export class Settings {
   private destroyRef = inject(DestroyRef);
+  isLoading = false;
 
   //Form data:
   userData = {
@@ -61,6 +63,8 @@ export class Settings {
       return;
     }
 
+    this.isLoading = true;
+
     this.authService
       .updateUser(formData)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -75,7 +79,10 @@ export class Settings {
           }
           this.router.navigate(['/profile']);
         },
-        error: (err) => console.error('Update failed:', err),
+        error: (err) => {
+          this.isLoading = false;
+          console.error('Update failed:', err);
+        },
       });
   }
 }
