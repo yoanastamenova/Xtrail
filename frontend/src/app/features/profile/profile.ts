@@ -1,4 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+  OnDestroy,
+  DestroyRef,
+  inject,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { RunsCard } from '../../shared/components/runs-card/runs-card';
 import { AchievementsCard } from '../../shared/components/achievements-card/achievements-card';
@@ -18,7 +28,7 @@ Chart.register(...registerables);
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
-export class Profile implements OnInit {
+export class Profile implements OnInit, OnDestroy {
   user: { id: number; username: string; email: string } | null = null;
   @ViewChild('distanceChart') chartRef!: ElementRef<HTMLCanvasElement>;
 
@@ -26,9 +36,10 @@ export class Profile implements OnInit {
     private authService: AuthService,
     private runService: RunsService,
     private cdr: ChangeDetectorRef,
-    private achievementService: AchievementsService
+    private achievementService: AchievementsService,
   ) {}
 
+  private destroyRef = inject(DestroyRef);
   runs: RunInterface[] = [];
   stats: any = null;
   achievements: UserAchievement[] = [];
@@ -36,25 +47,36 @@ export class Profile implements OnInit {
   ngOnInit() {
     this.user = this.authService.getUser();
 
-    this.runService.getRuns().subscribe((data: any) => {
-      this.runs = data;
-      if (this.runs.length > 0) {
-        this.cdr.detectChanges();
-        this.createChart();
-      }
-    });
+    this.runService
+      .getRuns()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: any) => {
+        this.runs = data;
+        if (this.runs.length > 0) {
+          this.cdr.detectChanges();
+          this.createChart();
+        }
+      });
 
-    this.runService.getStats().subscribe((data: any) => {
-      this.stats = {
-        ...data,
-        averageDistance: Math.round(data.averageDistance * 100) / 100,
-      };
-    });
+    this.runService
+      .getStats()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: any) => {
+        this.stats = {
+          ...data,
+          averageDistance: Math.round(data.averageDistance * 100) / 100,
+        };
+      });
 
-    this.achievementService.getUserAchievements().subscribe((data: UserAchievement[]) => {
-      this.achievements = data;
-    })
+    this.achievementService
+      .getUserAchievements()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: UserAchievement[]) => {
+        this.achievements = data;
+      });
   }
+
+  private chart: Chart | null = null;
 
   createChart() {
     const sortedRuns = [...this.runs].sort(
@@ -64,8 +86,7 @@ export class Profile implements OnInit {
       new Date(run.createdAt!).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
     );
     const data = sortedRuns.map((run) => run.distance);
-
-    new Chart(this.chartRef.nativeElement, {
+    this.chart = new Chart(this.chartRef.nativeElement, {
       type: 'line',
       data: {
         labels,
@@ -99,5 +120,9 @@ export class Profile implements OnInit {
         },
       },
     });
+  }
+
+  ngOnDestroy() {
+    this.chart?.destroy();
   }
 }

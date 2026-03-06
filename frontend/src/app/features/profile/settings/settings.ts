@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { Navbar } from '../../../shared/components/navbar/navbar';
 import { UserGoal } from '../../../interfaces/user.interface';
 import { AuthService } from '../../../core/services/auth-service';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-settings',
@@ -12,6 +13,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './settings.css',
 })
 export class Settings {
+  private destroyRef = inject(DestroyRef);
+
   //Form data:
   userData = {
     email: '',
@@ -48,7 +51,9 @@ export class Settings {
 
     if (this.userData.day && this.userData.month && this.userData.year) {
       const birthDate = new Date(+this.userData.year, +this.userData.month - 1, +this.userData.day);
-      formData['age'] = Math.floor((Date.now() - birthDate.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+      formData['age'] = Math.floor(
+        (Date.now() - birthDate.getTime()) / (365.25 * 24 * 60 * 60 * 1000),
+      );
     }
 
     if (Object.keys(formData).length === 0) {
@@ -56,18 +61,21 @@ export class Settings {
       return;
     }
 
-    this.authService.updateUser(formData).subscribe({
-      next: () => {
-        // Update localStorage immediately
-        const currentUser = this.authService.getUser();
-        if (currentUser) {
-          if (formData['username']) currentUser.username = formData['username'];
-          if (formData['email']) currentUser.email = formData['email'];
-          this.authService.saveUser(currentUser);
-        }
-        this.router.navigate(['/profile']);
-      },
-      error: (err) => console.error('Update failed:', err),
-    });
+    this.authService
+      .updateUser(formData)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          // Update localStorage immediately
+          const currentUser = this.authService.getUser();
+          if (currentUser) {
+            if (formData['username']) currentUser.username = formData['username'];
+            if (formData['email']) currentUser.email = formData['email'];
+            this.authService.saveUser(currentUser);
+          }
+          this.router.navigate(['/profile']);
+        },
+        error: (err) => console.error('Update failed:', err),
+      });
   }
 }
