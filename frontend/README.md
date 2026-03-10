@@ -116,11 +116,9 @@ src/
 
 ## Future Improvements
 
-- [ ] Add form validation with user feedback
 - [ ] Implement toast notifications for actions
 - [ ] Add pagination for runs list
 - [ ] Add search and filter capabilities
-- [ ] Implement edit run functionality
 - [ ] Add unit and e2e tests
 - [ ] Add offline support with service workers
 
