@@ -30,7 +30,24 @@ A fullstack running tracker application that helps users log runs, track progres
 - **Responsive Design** - Dark-themed UI optimized for desktop and mobile
 - **API Documentation** - Interactive Swagger docs at `/api`
 
+## Views
+
+### Home
+
+<img src="frontend/public/hero.png" />
+
+### Profile
+
+<img src="frontend/public/profile.png" />
 ## Project Structure
+
+### Runs
+
+<img src="frontend/public/runs.png" />
+
+### Achievements
+
+<img src="frontend/public/achievs.png" />
 
 ```
 Xtrail/
