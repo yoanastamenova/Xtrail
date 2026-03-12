@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserGoal, UserInterface } from '../../interfaces/user.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) {}
   register(data: UserInterface) {
     return this.http.post(`${this.apiUrl}/auth/register`, data);

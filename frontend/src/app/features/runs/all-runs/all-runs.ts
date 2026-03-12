@@ -6,10 +6,11 @@ import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { LoadingDots } from '../../../shared/components/loading-dots/loading-dots';
+import { ConfirmModal } from '../../../shared/components/confirm-modal/confirm-modal';
 
 @Component({
   selector: 'app-all-runs',
-  imports: [Navbar, DatePipe, LoadingDots],
+  imports: [Navbar, DatePipe, LoadingDots, ConfirmModal],
   templateUrl: './all-runs.html',
   styleUrl: './all-runs.css',
 })
@@ -23,6 +24,26 @@ export class AllRuns implements OnInit {
   ) {}
 
   isLoading = false;
+  showDeleteModal = false;
+  runToDelete: RunInterface | null = null;
+
+  openDeleteModal(run: RunInterface) {
+    this.runToDelete = run;
+    this.showDeleteModal = true;
+  }
+
+  confirmDelete() {
+    if (this.runToDelete) {
+      this.onDelete(this.runToDelete);
+    }
+    this.showDeleteModal = false;
+    this.runToDelete = null;
+  }
+
+  cancelDelete() {
+    this.showDeleteModal = false;
+    this.runToDelete = null;
+  }
 
   ngOnInit() {
     this.isLoading = true;

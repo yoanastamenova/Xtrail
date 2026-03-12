@@ -1,8 +1,11 @@
-<section class="relative bg-linear-to-br from-olive-950 to-olive-800 min-h-screen">
-  <div class="flex flex-col items-center justify-center px-6 mx-auto min-h-screen lg:py-0">
+<section class="relative bg-linear-to-br from-[#020502] to-[#050f05] min-h-screen">
+  <div class="flex flex-col items-center justify-center px-6 py-12 mx-auto min-h-screen">
     <a href="#" class="flex items-center mb-8 text-2xl font-semibold text-white">
       <img class="w-72 h-auto drop-shadow-2xl" src="/logo.png" alt="Xtrail logo" />
     </a>
+    @if (formError) {
+      <app-alert-card type="error" [message]="formError" class="w-full sm:max-w-md" />
+    }
     <div
       class="w-full bg-zinc-950 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 md:mt-0 sm:max-w-md xl:p-0"
     >
@@ -18,10 +21,15 @@
               type="email"
               name="email"
               id="email"
-              class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+              class="bg-gray-800/50 border text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+              [class.border-gray-600]="!fieldErrors.email"
+              [class.border-red-500]="fieldErrors.email"
               placeholder="name@mail.com"
               required=""
             />
+            @if (fieldErrors.email) {
+              <p class="mt-1 text-sm text-red-400">{{ fieldErrors.email }}</p>
+            }
           </div>
           <div>
             <label for="username" class="block mb-2 text-sm font-medium text-white">Username</label>
@@ -30,10 +38,15 @@
               type="text"
               name="username"
               id="username"
-              class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+              class="bg-gray-800/50 border text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+              [class.border-gray-600]="!fieldErrors.username"
+              [class.border-red-500]="fieldErrors.username"
               placeholder="poweruser"
               required=""
             />
+            @if (fieldErrors.username) {
+              <p class="mt-1 text-sm text-red-400">{{ fieldErrors.username }}</p>
+            }
           </div>
           <div>
             <label for="password" class="block mb-2 text-sm font-medium text-white">Password</label>
@@ -43,9 +56,14 @@
               name="password"
               id="password"
               placeholder="••••••••"
-              class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+              class="bg-gray-800/50 border text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+              [class.border-gray-600]="!fieldErrors.password"
+              [class.border-red-500]="fieldErrors.password"
               required=""
             />
+            @if (fieldErrors.password) {
+              <p class="mt-1 text-sm text-red-400">{{ fieldErrors.password }}</p>
+            }
           </div>
           <div>
             <label for="confirm" class="block mb-2 text-sm font-medium text-white"
@@ -57,9 +75,14 @@
               name="confirm"
               id="confirm"
               placeholder="••••••••"
-              class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+              class="bg-gray-800/50 border text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+              [class.border-gray-600]="!fieldErrors.confirmPassword"
+              [class.border-red-500]="fieldErrors.confirmPassword"
               required=""
             />
+            @if (fieldErrors.confirmPassword) {
+              <p class="mt-1 text-sm text-red-400">{{ fieldErrors.confirmPassword }}</p>
+            }
           </div>
           <div>
             <label class="block mb-2 text-sm font-medium text-white">Date of Birth</label>
@@ -69,7 +92,9 @@
                   [(ngModel)]="day"
                   id="day"
                   name="day"
-                  class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400 mr-20"
+                  class="bg-gray-800/50 border text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400 mr-20"
+                  [class.border-gray-600]="!fieldErrors.birthDate"
+                  [class.border-red-500]="fieldErrors.birthDate"
                   required=""
                 >
                   <option value="" disabled selected class="text-gray-400">Day</option>
@@ -111,7 +136,9 @@
                   [(ngModel)]="month"
                   id="month"
                   name="month"
-                  class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+                  class="bg-gray-800/50 border text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+                  [class.border-gray-600]="!fieldErrors.birthDate"
+                  [class.border-red-500]="fieldErrors.birthDate"
                   required=""
                 >
                   <option value="" disabled selected class="text-gray-400">Month</option>
@@ -134,7 +161,9 @@
                   [(ngModel)]="year"
                   id="year"
                   name="year"
-                  class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+                  class="bg-gray-800/50 border text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+                  [class.border-gray-600]="!fieldErrors.birthDate"
+                  [class.border-red-500]="fieldErrors.birthDate"
                   required=""
                 >
                   <option value="" disabled selected class="text-gray-400">Year</option>
@@ -192,31 +221,44 @@
                 </select>
               </div>
             </div>
+            @if (fieldErrors.birthDate) {
+              <p class="mt-1 text-sm text-red-400">{{ fieldErrors.birthDate }}</p>
+            }
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label for="weight" class="block mb-2 text-sm font-medium text-white">Weight</label>
+              <label for="weight" class="block mb-2 text-sm font-medium text-white">Weight (kg)</label>
               <input
                 [(ngModel)]="weight"
                 type="number"
                 name="weight"
                 id="weight"
-                class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
-                placeholder="Indicate in kilograms"
+                class="bg-gray-800/50 border text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+                [class.border-gray-600]="!fieldErrors.weight"
+                [class.border-red-500]="fieldErrors.weight"
+                placeholder="e.g. 70"
                 required=""
               />
+              @if (fieldErrors.weight) {
+                <p class="mt-1 text-sm text-red-400">{{ fieldErrors.weight }}</p>
+              }
             </div>
             <div>
-              <label for="height" class="block mb-2 text-sm font-medium text-white">Height</label>
+              <label for="height" class="block mb-2 text-sm font-medium text-white">Height (cm)</label>
               <input
                 [(ngModel)]="height"
                 type="number"
                 name="height"
                 id="height"
-                class="bg-gray-800/50 border border-gray-600 text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
-                placeholder="Height in centimeters"
+                class="bg-gray-800/50 border text-white rounded-xl focus:ring-2 focus:ring-lime-400 focus:border-lime-400 block w-full p-3 placeholder-gray-400"
+                [class.border-gray-600]="!fieldErrors.height"
+                [class.border-red-500]="fieldErrors.height"
+                placeholder="e.g. 175"
                 required=""
               />
+              @if (fieldErrors.height) {
+                <p class="mt-1 text-sm text-red-400">{{ fieldErrors.height }}</p>
+              }
             </div>
           </div>
           <div>
@@ -268,12 +310,13 @@
             }
           </button>
           <p class="text-sm font-light text-gray-300 text-center">
+            Already have an account?
             <button
               type="button"
               routerLink="/login"
-              class="object-center text-xl items-center hover:cursor-pointer text-lime-600 dark:text-lime-500"
+              class="font-medium text-lime-400 hover:text-lime-300 hover:cursor-pointer underline transition-colors"
             >
-              Already have an account?
+              Sign in
             </button>
           </p>
         </form>
