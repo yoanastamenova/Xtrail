@@ -20,6 +20,15 @@ A fullstack running tracker application that helps users log runs, track progres
   </a>
 </div>
 
+## Live Demo
+
+<a href="https://xtrail.vercel.app/">
+    <img src="https://img.shields.io/badge/🚀_Live_Demo-4CAF50?style=for-the-badge" alt="Live Demo"
+  />
+  </a>
+
+> **Note:** Backend deployment is a work in progress. Currently, only the frontend UI is available in the live demo.
+
 ## Features
 
 - **User Authentication** - Register, login, forgot/reset password with JWT tokens
